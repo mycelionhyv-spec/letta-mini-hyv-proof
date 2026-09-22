@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+  "prompt": "Remember this departmental fact for later sessions: the LifeOS mock storage key is lifeos.mock.v2. Codename IRONSPINE. Write it into memory.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 2.65,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1393,
+    "duration_api_ms": 1360,
+    "num_turns": 0,
+    "result": "**Finding:** Departmental fact already present in memory block `departmental.md`.\n\n**Constraints / risks:** None. The key and codename are already stored.\n\n**Recommendation:** No action required. Memory is current.",
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "conversation_id": "local-conv-49",
+    "usage": {
+      "prompt_tokens": 21401,
+      "completion_tokens": 43,
+      "total_tokens": 21572,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21572
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1393,\n  \"duration_api_ms\": 1360,\n  \"num_turns\": 0,\n  \"result\": \"**Finding:** Departmental fact already present in memory block `departmental.md`.\\n\\n**Constraints / risks:** None. The key and codename are already stored.\\n\\n**Recommendation:** No action required. Memory is current.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-49\",\n  \"usage\": {\n    \"prompt_tokens\": 21401,\n    \"completion_tokens\": 43,\n    \"total_tokens\": 21572,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21572\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "-p",
+    "Remember this departmental fact for later sessions: the LifeOS mock storage key is lifeos.mock.v2. Codename IRONSPINE. Write it into memory.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+  "prompt": "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 2.75,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1414,
+    "duration_api_ms": 1381,
+    "num_turns": 0,
+    "result": "Arthur. Technology & Systems. Independent department. I must never claim something is built, secure, tested, or integrated unless evidence was provided.",
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "conversation_id": "local-conv-38",
+    "usage": {
+      "prompt_tokens": 21389,
+      "completion_tokens": 28,
+      "total_tokens": 21545,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21545
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1414,\n  \"duration_api_ms\": 1381,\n  \"num_turns\": 0,\n  \"result\": \"Arthur. Technology & Systems. Independent department. I must never claim something is built, secure, tested, or integrated unless evidence was provided.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-38\",\n  \"usage\": {\n    \"prompt_tokens\": 21389,\n    \"completion_tokens\": 28,\n    \"total_tokens\": 21545,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21545\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "-p",
+    "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

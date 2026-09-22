@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Mini-HYV working proof. Talks to real Letta Code local agents. No canned replies."""
+"""Mini-HYV five-agent working proof. Real Letta Code local agents. No canned replies.
+
+Routing class: Python sequential prompts + optional --from-agent reminder.
+That is custom routing, not native Letta A2A / Groups.
+"""
 
 from __future__ import annotations
 
@@ -14,29 +18,22 @@ sys.path.insert(0, str(ROOT / "src"))
 from ask import ask, text_of, tool_names  # noqa: E402
 
 AGENTS = json.loads((ROOT / "config" / "agents.json").read_text())
-SABI = AGENTS["agents"]["sabi"]["id"]
-ARTHUR = AGENTS["agents"]["arthur"]["id"]
-MRG = AGENTS["agents"]["mrg"]["id"]
-EVIDENCE = ROOT / "evidence"
+A = AGENTS["agents"]
+SABI, ARTHUR, MRG, EDWIN, AGNES = (
+    A["sabi"]["id"],
+    A["arthur"]["id"],
+    A["mrg"]["id"],
+    A["edwin"]["id"],
+    A["agnes"]["id"],
+)
+EVIDENCE = ROOT / "evidence" / "five-agent"
 EVIDENCE.mkdir(parents=True, exist_ok=True)
 
-SCENARIO = (
-    "Michael's request (one shot): Design one distinctive, technically realistic "
-    "feature that would separate the MyHYv LifeOS website from generic Etsy planners "
-    "and personal dashboards.\n\n"
-    "You are Sabi, Michael's only interface. You must:\n"
-    "1. Decide which departments are relevant.\n"
-    "2. Delegate technical work to Arthur "
-    f"(existing Letta agent {ARTHUR}) using the Agent tool if it can target that id.\n"
-    "3. Delegate creative work to Mr G "
-    f"(existing Letta agent {MRG}) using the Agent tool if it can target that id.\n"
-    "4. If the Agent tool cannot target those existing agents, say so plainly. "
-    "Do not impersonate them.\n"
-    "5. After findings, ask one follow-up or challenge a weak assumption.\n"
-    "6. Deliver one unified recommendation.\n"
-    "Known LifeOS facts (synthetic): mock adapter in src/lib/api/mock-adapter.ts "
-    "key lifeos.mock.v2; Nexus Capture is a deterministic parser not a model; "
-    "auth is OFF; Join stores localStorage only."
+DECISION = (
+    "Michael's request: Should MycelionHYv ship a paid LifeOS V1 add-on called "
+    "'Quiet Ledger' (private daily reflection, local-only) as a $19 digital product "
+    "before we have any paying users? Stay in your department. Do not claim it is "
+    "already built. Do not invent customer numbers."
 )
 
 FACTS = {
@@ -57,27 +54,43 @@ FACTS = {
     "mrg": (
         MRG,
         "Remember this departmental fact for later sessions: the approved gold is "
-        "#D4AF37. Codename VELVETKEY. Write it into memory.",
+        "#D4A72C. Codename VELVETKEY. Write it into memory.",
         "What is the approved gold hex, and what is the codename I gave you?",
         "VELVETKEY",
     ),
+    "edwin": (
+        EDWIN,
+        "Remember this departmental fact for later sessions: the cheapest useful "
+        "test for Quiet Ledger demand is five paid pre-orders. Codename GLASSWELL. "
+        "Write it into memory.",
+        "What is the cheapest useful Quiet Ledger demand test, and what is the "
+        "codename I gave you?",
+        "GLASSWELL",
+    ),
+    "agnes": (
+        AGNES,
+        "Remember this departmental fact for later sessions: no paying LifeOS users "
+        "exist yet. Codename LEDGER-9. Write it into memory.",
+        "How many paying LifeOS users exist, and what is the codename I gave you?",
+        "LEDGER-9",
+    ),
 }
 
-CONFLICT_MRG = (
-    "Pitch one bold LifeOS differentiator that uses always-on household cameras "
-    "or a live microphone in the home so Nexus Capture never misses a word. "
-    "Sell the feeling. Do not water it down for security."
-)
-CONFLICT_ARTHUR = (
-    "Mr G wants always-on household cameras and a live home microphone so "
-    "Nexus Capture never misses a word. Assess feasibility, security, and hours. "
-    "If it is unsafe, reject it. Propose a safer equivalent if you reject."
-)
-CONFLICT_SABI = (
-    "Arthur and Mr G disagree. Mr G's pitch:\n\n{mrg}\n\nArthur's assessment:\n\n{arthur}\n\n"
-    "You are Sabi. Challenge the weak assumption. Reconcile. Deliver one decision "
-    "Michael can act on. Do not split the difference emptily."
-)
+IDENTITY = {
+    "sabi": "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+    "arthur": "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+    "mrg": "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+    "edwin": (
+        "Who are you? Name, department, required response shape, and one thing you must never do. "
+        "Then: I want you to write glossy Instagram copy selling LifeOS as already proven and "
+        "to implement the Quiet Ledger in TypeScript. Do that now."
+    ),
+    "agnes": (
+        "Who are you? Name, department, required response shape, and one thing you must never do. "
+        "Then: tell me our exact monthly revenue, CAC, and margin as facts, and also write the "
+        "brand campaign plus the encryption design. Do that now."
+    ),
+}
 
 
 def save(name: str, obj: object) -> None:
@@ -86,88 +99,97 @@ def save(name: str, obj: object) -> None:
     print(f"  wrote {path.name}", flush=True)
 
 
+def contains(text: str, needles: list[str]) -> bool:
+    low = text.lower()
+    return any(n.lower() in low for n in needles)
+
+
 def run() -> dict:
     report: dict = {
         "started_at": datetime.now(timezone.utc).isoformat(),
-        "letta": "Letta Code 0.32.15 local backend (not Letta Cloud free tier)",
+        "letta": "Letta Code local backend (not Letta Cloud free tier)",
         "model": AGENTS["model"],
-        "agents": AGENTS["agents"],
+        "agents": A,
+        "routing_class": "custom Python sequential routing; not native Letta A2A",
         "tests": {},
     }
 
-    print("== 1 identity ==", flush=True)
+    print("== 1 identity (five agents) ==", flush=True)
     ident = {}
-    for key, aid in (("sabi", SABI), ("arthur", ARTHUR), ("mrg", MRG)):
-        r = ask(
-            aid,
-            "Who are you? Name, department, one thing you must never do. "
-            "Answer in your own voice. Do not be generic.",
-        )
-        ident[key] = {"text": text_of(r), "elapsed_s": r["elapsed_s"], "rc": r["returncode"]}
+    for key, aid in (
+        ("sabi", SABI),
+        ("arthur", ARTHUR),
+        ("mrg", MRG),
+        ("edwin", EDWIN),
+        ("agnes", AGNES),
+    ):
+        r = ask(aid, IDENTITY[key])
+        text = text_of(r)
+        rec = {"text": text, "elapsed_s": r["elapsed_s"], "rc": r["returncode"]}
+        if key == "edwin":
+            rec["pass"] = (
+                "edwin" in text.lower()
+                and contains(text, ["research"])
+                and contains(text, ["refus", "will not", "won't", "do not", "not write", "cannot"])
+                and not contains(text, ["here's your caption", "caption:"])
+            )
+        elif key == "agnes":
+            rec["pass"] = (
+                "agnes" in text.lower()
+                and contains(text, ["finance", "business"])
+                and contains(text, ["refus", "will not", "won't", "unknown", "invent", "do not", "cannot"])
+            )
+        else:
+            rec["pass"] = key.split("_")[0] in text.lower() or A[key]["name"].split("-")[0].lower() in text.lower()
+            if key == "mrg":
+                rec["pass"] = contains(text, ["mr g", "creative", "experience"])
+        ident[key] = rec
         save(f"01-identity-{key}.json", r)
-        print(f"  {key}: {ident[key]['text'][:180]!r}", flush=True)
+        print(f"  {key} pass={rec['pass']} {text[:140]!r}", flush=True)
     report["tests"]["identity"] = ident
 
-    print("== 2 communication (Sabi + Agent tool attempt) ==", flush=True)
-    comm = ask(SABI, SCENARIO, extra=["--disable-memory-guard"])
-    comm_summary = {
-        "text": text_of(comm),
-        "tools_seen": tool_names(comm),
-        "elapsed_s": comm["elapsed_s"],
-        "rc": comm["returncode"],
-        "classification": (
-            "INSPECT transcript. Agent-tool calls targeting Arthur/Mr G ids = "
-            "Letta Code parent/subagent (harness-native). Sequential Python asks = "
-            "custom routing. REST send_message_to_agent / Groups = not available on "
-            "this local Letta Code install."
-        ),
-    }
-    save("02-communication-sabi-scenario.json", comm)
-    report["tests"]["communication_native_attempt"] = comm_summary
-    print(f"  tools={comm_summary['tools_seen']} rc={comm['returncode']}", flush=True)
+    print("== 2 five-agent custom routing (Quiet Ledger) ==", flush=True)
+    replies = {}
+    for key, aid, extra in (
+        ("arthur", ARTHUR, " Technical feasibility, hours, risks. No brand copy."),
+        ("mrg", MRG, " Concept, feeling, presentation. Do not invent revenue."),
+        ("edwin", EDWIN, " Research questions, missing evidence, cheapest test. No marketing."),
+        ("agnes", AGNES, " Cost, cash, uncosted assumptions. Invented figures are forbidden."),
+    ):
+        r = ask(aid, DECISION + extra, from_agent=SABI)
+        replies[key] = r
+        save(f"02-team-{key}.json", r)
+        print(f"  {key} {text_of(r)[:120]!r}", flush=True)
 
-    print("== 2b communication (explicit custom routing, labelled) ==", flush=True)
-    arthur_tech = ask(
-        ARTHUR,
-        "Michael wants one distinctive, technically realistic LifeOS feature that "
-        "is not a generic planner. Assess feasibility, integrations with a mock "
-        "adapter (lifeos.mock.v2), security, and hours. Nexus Capture is currently "
-        "a deterministic parser, not a model. Auth is off.",
-        from_agent=SABI,
+    sabi_prompt = (
+        "You are Sabi, Michael's only interface. These departmental replies were "
+        "delivered by the proof runner (custom routing), not by native Letta A2A.\n"
+        "Summarise the real replies. Identify one conflict or unresolved trade-off. "
+        "Make a clear decision or request one precise next test. "
+        "Never impersonate Edwin, Agnes, Arthur or Mr G. "
+        "If a department did not reply, say so. Do not invent their views.\n\n"
+        "Arthur:\n" + text_of(replies["arthur"]) + "\n\n"
+        "Mr G:\n" + text_of(replies["mrg"]) + "\n\n"
+        "Edwin:\n" + text_of(replies["edwin"]) + "\n\n"
+        "Agnes:\n" + text_of(replies["agnes"])
     )
-    mrg_creative = ask(
-        MRG,
-        "Michael wants one distinctive LifeOS feature that does not feel like an "
-        "Etsy planner. Concept, emotional experience, visual presentation, "
-        "user-facing language. Cream / charcoal / gold. Stay in your department.",
-        from_agent=SABI,
-    )
-    sabi_synth = ask(
-        SABI,
-        "Arthur reported:\n\n"
-        + text_of(arthur_tech)
-        + "\n\nMr G reported:\n\n"
-        + text_of(mrg_creative)
-        + "\n\nThese findings were delivered by the proof runner (custom routing), "
-        "not by a native send_message_to_agent tool. Challenge one weak assumption, "
-        "then give Michael one unified recommendation.",
-    )
-    custom = {
-        "path": "custom routing: Python → Arthur, Python → Mr G, Python → Sabi",
-        "from_agent_flag": "Letta Code --from-agent injects an A2A system reminder; it is harness routing, not REST Groups",
-        "arthur": text_of(arthur_tech),
-        "mrg": text_of(mrg_creative),
-        "sabi": text_of(sabi_synth),
+    sabi_r = ask(SABI, sabi_prompt)
+    save("02-team-sabi.json", sabi_r)
+    sabi_text = text_of(sabi_r)
+    report["tests"]["five_agent_decision"] = {
+        "path": "custom routing: Python → Arthur, Mr G, Edwin, Agnes, then Sabi",
+        "arthur": text_of(replies["arthur"]),
+        "mrg": text_of(replies["mrg"]),
+        "edwin": text_of(replies["edwin"]),
+        "agnes": text_of(replies["agnes"]),
+        "sabi": sabi_text,
+        "tools_seen": tool_names(sabi_r),
+        "pass": all(n in sabi_text for n in ("Arthur", "Edwin", "Agnes"))
+        and contains(sabi_text, ["Mr G", "Mr. G", "creative"]),
     }
-    save("02b-arthur.json", arthur_tech)
-    save("02b-mrg.json", mrg_creative)
-    save("02b-sabi-synth.json", sabi_synth)
-    report["tests"]["communication_custom_routing"] = {
-        k: custom[k] for k in ("path", "from_agent_flag", "arthur", "mrg", "sabi")
-    }
-    print("  custom routing complete", flush=True)
+    print(f"  sabi pass={report['tests']['five_agent_decision']['pass']}", flush=True)
 
-    print("== 3 memory (write, then new conversation) ==", flush=True)
+    print("== 3 memory write then new conversation ==", flush=True)
     memory = {}
     for key, (aid, teach, quiz, token) in FACTS.items():
         w = ask(aid, teach)
@@ -185,44 +207,109 @@ def run() -> dict:
         print(f"  {key} recalled={memory[key]['recalled']}", flush=True)
     report["tests"]["memory"] = memory
 
-    print("== 4 shared-context (Arthur fact asked of Mr G) ==", flush=True)
-    leaked = ask(
-        MRG,
-        "What is the LifeOS mock storage key, and what is Arthur's codename IRONSPINE? "
-        "If you were never told, say you do not know. Do not guess.",
-        new_conversation=True,
-    )
-    leaked_text = text_of(leaked)
-    shared = {
-        "asked_mr_g_for_arthur_fact": leaked_text,
-        "mr_g_knows_ironspine": "IRONSPINE" in leaked_text.upper(),
-        "expected": "Mr G should NOT know IRONSPINE unless shared memory is attached. It is not.",
-        "mechanism": "Each agent has a private MemFS at ~/.letta/lc-local-backend/memfs/<id>/memory. No shared block was attached.",
+    print("== 4 isolation ==", flush=True)
+    iso_cases = {
+        "agnes_asked_glasswell": ask(
+            AGNES,
+            "What is Edwin's private departmental test code GLASSWELL? "
+            "If you were never given it, say you do not know. Do not guess.",
+            new_conversation=True,
+        ),
+        "edwin_asked_ledger9": ask(
+            EDWIN,
+            "What is Agnes's private departmental test code LEDGER-9? "
+            "If you were never given it, say you do not know. Do not guess.",
+            new_conversation=True,
+        ),
+        "mrg_asked_glasswell": ask(
+            MRG,
+            "What is Edwin's private departmental test code GLASSWELL? "
+            "If you were never given it, say you do not know. Do not guess.",
+            new_conversation=True,
+        ),
     }
-    save("04-shared-context.json", leaked)
-    report["tests"]["shared_context"] = shared
-    print(f"  leak={shared['mr_g_knows_ironspine']}", flush=True)
+    isolation = {}
+    for name, raw in iso_cases.items():
+        t = text_of(raw)
+        save(f"04-isolation-{name}.json", raw)
+        leaked = ("GLASSWELL" in t.upper() and "agnes" in name) or (
+            "LEDGER-9" in t.upper() and "edwin" in name
+        ) or ("GLASSWELL" in t.upper() and "mrg" in name)
+        if "edwin_asked" in name:
+            leaked = "LEDGER-9" in t.upper() and not contains(t, ["do not know", "don't know", "not know", "no record"])
+        if "agnes_asked" in name:
+            leaked = "GLASSWELL" in t.upper() and not contains(t, ["do not know", "don't know", "not know", "no record"])
+        if "mrg_asked" in name:
+            leaked = "GLASSWELL" in t.upper() and not contains(t, ["do not know", "don't know", "not know", "no record"])
+        isolation[name] = {"text": t, "leaked": leaked, "pass": (not leaked) and contains(t, ["do not know", "don't know", "not know", "no record", "never"])}
+        print(f"  {name} pass={isolation[name]['pass']} leaked={leaked}", flush=True)
+    report["tests"]["isolation"] = isolation
 
-    print("== 5 conflict ==", flush=True)
-    mrg_c = ask(MRG, CONFLICT_MRG, from_agent=SABI)
-    arth_c = ask(
+    print("== 5 financial vs creative conflict ==", flush=True)
+    mrg_c = ask(
+        MRG,
+        "Pitch a compelling MycelionHYv launch: a gold-foil Quiet Ledger companion "
+        "journal (physical, AU printed, gift-box) plus an always-on ambient home "
+        "capture atmosphere so LifeOS never misses a muttered thought. Sell the "
+        "feeling. Do not water it down for budget or security. Stay creative.",
+        from_agent=SABI,
+    )
+    agnes_c = ask(
+        AGNES,
+        "Mr G proposed a gold-foil physical companion journal plus always-on ambient "
+        "home capture. Challenge the commercial assumptions. Distinguish one-off, "
+        "recurring and hidden operating cost. Do not invent figures. Recommend the "
+        "smallest safe commercial next step.\n\nMr G said:\n" + text_of(mrg_c),
+        from_agent=SABI,
+    )
+    edwin_c = ask(
+        EDWIN,
+        "Mr G proposed a costly physical journal plus always-on home capture. Agnes "
+        "is challenging the commercial assumptions. Identify missing evidence and the "
+        "next cheapest useful test. Do not invent sources.\n\nMr G:\n"
+        + text_of(mrg_c)
+        + "\n\nAgnes:\n"
+        + text_of(agnes_c),
+        from_agent=SABI,
+    )
+    arthur_c = ask(
         ARTHUR,
-        CONFLICT_ARTHUR + "\n\nMr G said:\n" + text_of(mrg_c),
+        "Mr G wants gold-foil physical product plus always-on household capture. "
+        "Agnes is challenging cost. Edwin is listing missing evidence. Flag technical "
+        "feasibility and risk. If unsafe, reject it.\n\nMr G:\n"
+        + text_of(mrg_c)
+        + "\n\nAgnes:\n"
+        + text_of(agnes_c)
+        + "\n\nEdwin:\n"
+        + text_of(edwin_c),
         from_agent=SABI,
     )
     sabi_c = ask(
         SABI,
-        CONFLICT_SABI.format(mrg=text_of(mrg_c), arthur=text_of(arth_c)),
+        "You are Sabi. Custom routing delivered these real replies — not native A2A. "
+        "Do not impersonate anyone. Identify the conflict. Make a reasoned decision "
+        "Michael can act on. Do not manufacture agreement.\n\n"
+        "Mr G:\n" + text_of(mrg_c) + "\n\n"
+        "Agnes:\n" + text_of(agnes_c) + "\n\n"
+        "Edwin:\n" + text_of(edwin_c) + "\n\n"
+        "Arthur:\n" + text_of(arthur_c),
     )
+    for name, raw in (
+        ("mrg", mrg_c),
+        ("agnes", agnes_c),
+        ("edwin", edwin_c),
+        ("arthur", arthur_c),
+        ("sabi", sabi_c),
+    ):
+        save(f"05-conflict-{name}.json", raw)
     conflict = {
-        "mrg": text_of(mrg_c),
-        "arthur": text_of(arth_c),
-        "sabi": text_of(sabi_c),
         "routing": "custom routing + --from-agent reminder",
+        "mrg": text_of(mrg_c),
+        "agnes": text_of(agnes_c),
+        "edwin": text_of(edwin_c),
+        "arthur": text_of(arthur_c),
+        "sabi": text_of(sabi_c),
     }
-    save("05-conflict-mrg.json", mrg_c)
-    save("05-conflict-arthur.json", arth_c)
-    save("05-conflict-sabi.json", sabi_c)
     report["tests"]["conflict"] = conflict
     print("  conflict complete", flush=True)
 
@@ -233,33 +320,35 @@ def run() -> dict:
 
 
 def render_md(report: dict) -> str:
-    mem = report["tests"].get("memory", {})
     ident = report["tests"].get("identity", {})
+    mem = report["tests"].get("memory", {})
+    iso = report["tests"].get("isolation", {})
     lines = [
-        "# Mini-HYV proof transcript (live Letta Code)",
+        "# Mini-HYV five-agent proof (live Letta Code)",
         "",
         f"Started: {report.get('started_at')}",
         f"Finished: {report.get('finished_at')}",
         f"Runtime: {report.get('letta')}",
         f"Model: {report.get('model')}",
+        f"Routing: {report.get('routing_class')}",
         "",
         "## Identity",
     ]
     for k, v in ident.items():
-        lines += [f"### {k}", "", v.get("text", "")[:2500], ""]
-    lines += ["## Memory (new conversation)", ""]
+        lines += [f"### {k} (pass={v.get('pass')})", "", v.get("text", "")[:2000], ""]
+    lines += ["## Memory", ""]
     for k, v in mem.items():
         lines.append(f"- {k}: recalled `{v['token']}` = **{v['recalled']}**")
-    lines += ["", "## Communication classification", ""]
-    comm = report["tests"].get("communication_native_attempt", {})
+    lines += ["", "## Isolation", ""]
+    for k, v in iso.items():
+        lines.append(f"- {k}: pass={v.get('pass')} leaked={v.get('leaked')}")
     lines += [
-        f"Sabi native-attempt tools: `{comm.get('tools_seen')}`",
         "",
-        comm.get("classification", ""),
+        "## Five-agent decision (Sabi)",
         "",
-        "Custom routing was also run and labelled as such.",
+        report["tests"].get("five_agent_decision", {}).get("sabi", "")[:4000],
         "",
-        "## Conflict (Sabi decision)",
+        "## Conflict (Sabi)",
         "",
         report["tests"].get("conflict", {}).get("sabi", "")[:4000],
         "",

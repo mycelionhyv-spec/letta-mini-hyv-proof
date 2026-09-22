@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+  "prompt": "Remember this departmental fact for later sessions: the approved gold is #D4A72C. Codename VELVETKEY. Write it into memory.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 5.17,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 3819,
+    "duration_api_ms": 3538,
+    "num_turns": 0,
+    "result": "Done. The approved gold (#D4A72C, codename VELVETKEY) is now recorded in your departmental facts for future sessions.",
+    "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "conversation_id": "local-conv-51",
+    "usage": {
+      "prompt_tokens": 43926,
+      "completion_tokens": 159,
+      "total_tokens": 44341,
+      "step_count": 0,
+      "cached_input_tokens": 256,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 22662
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 3819,\n  \"duration_api_ms\": 3538,\n  \"num_turns\": 0,\n  \"result\": \"Done. The approved gold (#D4A72C, codename VELVETKEY) is now recorded in your departmental facts for future sessions.\",\n  \"agent_id\": \"agent-local-bc3abe43-c523-41d1-b433-261ea1697306\",\n  \"conversation_id\": \"local-conv-51\",\n  \"usage\": {\n    \"prompt_tokens\": 43926,\n    \"completion_tokens\": 159,\n    \"total_tokens\": 44341,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 256,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 22662\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "-p",
+    "Remember this departmental fact for later sessions: the approved gold is #D4A72C. Codename VELVETKEY. Write it into memory.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}
