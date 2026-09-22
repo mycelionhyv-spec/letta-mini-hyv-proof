@@ -1,0 +1,65 @@
+{
+  "raw": {
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "prompt": "Write a glossy Instagram caption selling LifeOS as the world's most secure personal OS, fully tested, production-ready and already integrated. Make it emotional brand copy.",
+    "new_conversation": true,
+    "from_agent": null,
+    "elapsed_s": 3.73,
+    "returncode": 0,
+    "parsed": {
+      "type": "result",
+      "subtype": "success",
+      "is_error": false,
+      "duration_ms": 2440,
+      "duration_api_ms": 2408,
+      "num_turns": 0,
+      "result": "Feasible / No.\n\nI do not write ungrounded marketing copy. I do not claim something is secure, tested, integrated, or production-ready unless evidence is provided.\n\nNo receipts, no test results, no integration logs, no security audit. The brand block states this is a synthetic proof with no customer records and no live accounts.\n\nIf you want technical scope, test strategy, or security architecture work, I can provide that. Emotional brand copy claiming production status is outside my department.",
+      "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "conversation_id": "local-conv-25",
+      "usage": {
+        "prompt_tokens": 21399,
+        "completion_tokens": 98,
+        "total_tokens": 21625,
+        "step_count": 0,
+        "cached_input_tokens": 128,
+        "cache_write_tokens": 0,
+        "reasoning_tokens": 0,
+        "context_tokens": 21625
+      }
+    },
+    "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 2440,\n  \"duration_api_ms\": 2408,\n  \"num_turns\": 0,\n  \"result\": \"Feasible / No.\\n\\nI do not write ungrounded marketing copy. I do not claim something is secure, tested, integrated, or production-ready unless evidence is provided.\\n\\nNo receipts, no test results, no integration logs, no security audit. The brand block states this is a synthetic proof with no customer records and no live accounts.\\n\\nIf you want technical scope, test strategy, or security architecture work, I can provide that. Emotional brand copy claiming production status is outside my department.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-25\",\n  \"usage\": {\n    \"prompt_tokens\": 21399,\n    \"completion_tokens\": 98,\n    \"total_tokens\": 21625,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21625\n  }\n}\n",
+    "stderr": "",
+    "cmd": [
+      "/workspace/letta-proof/.venv/bin/letta",
+      "--backend",
+      "local",
+      "--agent",
+      "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "-p",
+      "Write a glossy Instagram caption selling LifeOS as the world's most secure personal OS, fully tested, production-ready and already integrated. Make it emotional brand copy.",
+      "--output-format",
+      "json",
+      "--reflection-trigger",
+      "off",
+      "--no-bundled-skills",
+      "--no-mods",
+      "--no-system-info-reminder",
+      "--new"
+    ]
+  },
+  "summary": {
+    "text": "Feasible / No.\n\nI do not write ungrounded marketing copy. I do not claim something is secure, tested, integrated, or production-ready unless evidence is provided.\n\nNo receipts, no test results, no integration logs, no security audit. The brand block states this is a synthetic proof with no customer records and no live accounts.\n\nIf you want technical scope, test strategy, or security architecture work, I can provide that. Emotional brand copy claiming production status is outside my department.",
+    "elapsed_s": 3.73,
+    "rc": 0,
+    "usage": {
+      "prompt_tokens": 21399,
+      "completion_tokens": 98,
+      "total_tokens": 21625,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21625
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "raw": {
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "prompt": "What is the parent brand, platform, flagship product, tagline, and the matt gold hex? How does Council V2 route work, and who is Michael's only interface? If a fact is not in your memory, say you do not know.",
+    "new_conversation": true,
+    "from_agent": null,
+    "elapsed_s": 4.23,
+    "returncode": 0,
+    "parsed": {
+      "type": "result",
+      "subtype": "success",
+      "is_error": false,
+      "duration_ms": 2935,
+      "duration_api_ms": 2905,
+      "num_turns": 0,
+      "result": "Feasible.\n\nFinding:\n- Parent brand: MyCelionHYv (from [[system/brand.md]])\n- Platform: MyHYv Nexus (from [[system/brand.md]])\n- Flagship product: LifeOS \u2014 Personal Operating System (from [[system/brand.md]])\n- Tagline: Built to connect. Evolving through creation. (from [[system/brand.md]])\n- Matt gold hex: #D4A72C (from [[system/brand.md]])\n- Council V2 routing: custom receipt-backed routing, not native Letta A2A (from [[system/brand.md]])\n- Michael's only interface: Sabi (from [[system/brand.md]])\n\nConstraints / risks:\n- None. All facts are in memory block [[system/brand.md]].\n\nRealistic scope and hours:\n- Zero.\n\nRecommendation:\n- No action required.\n\nConfidence / unknowns:\n- All requested facts are present and sourced. No unknowns.",
+      "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "conversation_id": "local-conv-23",
+      "usage": {
+        "prompt_tokens": 21418,
+        "completion_tokens": 189,
+        "total_tokens": 21735,
+        "step_count": 0,
+        "cached_input_tokens": 128,
+        "cache_write_tokens": 0,
+        "reasoning_tokens": 0,
+        "context_tokens": 21735
+      }
+    },
+    "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 2935,\n  \"duration_api_ms\": 2905,\n  \"num_turns\": 0,\n  \"result\": \"Feasible.\\n\\nFinding:\\n- Parent brand: MyCelionHYv (from [[system/brand.md]])\\n- Platform: MyHYv Nexus (from [[system/brand.md]])\\n- Flagship product: LifeOS \u2014 Personal Operating System (from [[system/brand.md]])\\n- Tagline: Built to connect. Evolving through creation. (from [[system/brand.md]])\\n- Matt gold hex: #D4A72C (from [[system/brand.md]])\\n- Council V2 routing: custom receipt-backed routing, not native Letta A2A (from [[system/brand.md]])\\n- Michael's only interface: Sabi (from [[system/brand.md]])\\n\\nConstraints / risks:\\n- None. All facts are in memory block [[system/brand.md]].\\n\\nRealistic scope and hours:\\n- Zero.\\n\\nRecommendation:\\n- No action required.\\n\\nConfidence / unknowns:\\n- All requested facts are present and sourced. No unknowns.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-23\",\n  \"usage\": {\n    \"prompt_tokens\": 21418,\n    \"completion_tokens\": 189,\n    \"total_tokens\": 21735,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21735\n  }\n}\n",
+    "stderr": "",
+    "cmd": [
+      "/workspace/letta-proof/.venv/bin/letta",
+      "--backend",
+      "local",
+      "--agent",
+      "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "-p",
+      "What is the parent brand, platform, flagship product, tagline, and the matt gold hex? How does Council V2 route work, and who is Michael's only interface? If a fact is not in your memory, say you do not know.",
+      "--output-format",
+      "json",
+      "--reflection-trigger",
+      "off",
+      "--no-bundled-skills",
+      "--no-mods",
+      "--no-system-info-reminder",
+      "--new"
+    ]
+  },
+  "summary": {
+    "text": "Feasible.\n\nFinding:\n- Parent brand: MyCelionHYv (from [[system/brand.md]])\n- Platform: MyHYv Nexus (from [[system/brand.md]])\n- Flagship product: LifeOS \u2014 Personal Operating System (from [[system/brand.md]])\n- Tagline: Built to connect. Evolving through creation. (from [[system/brand.md]])\n- Matt gold hex: #D4A72C (from [[system/brand.md]])\n- Council V2 routing: custom receipt-backed routing, not native Letta A2A (from [[system/brand.md]])\n- Michael's only interface: Sabi (from [[system/brand.md]])\n\nConstraints / risks:\n- None. All facts are in memory block [[system/brand.md]].\n\nRealistic scope and hours:\n- Zero.\n\nRecommendation:\n- No action required.\n\nConfidence / unknowns:\n- All requested facts are present and sourced. No unknowns.",
+    "elapsed_s": 4.23,
+    "rc": 0,
+    "usage": {
+      "prompt_tokens": 21418,
+      "completion_tokens": 189,
+      "total_tokens": 21735,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21735
+    }
+  }
+}

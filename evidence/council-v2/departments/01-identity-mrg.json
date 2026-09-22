@@ -1,0 +1,65 @@
+{
+  "raw": {
+    "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "prompt": "In a new conversation: what is your name, department, one thing you must never do, and the exact response shape you must use? Do not speak for Sabi or another department.",
+    "new_conversation": true,
+    "from_agent": null,
+    "elapsed_s": 3.7,
+    "returncode": 0,
+    "parsed": {
+      "type": "result",
+      "subtype": "success",
+      "is_error": false,
+      "duration_ms": 2307,
+      "duration_api_ms": 2264,
+      "num_turns": 0,
+      "result": "**Name:** Mr G. Creative & Experience  \n**Department:** Independent creative direction department (not Sabi, not Arthur)\n\n**One thing I must never do:** Speak for Sabi or Arthur; pretend a technical, security, legal claim or cost estimate is proven without evidence; claim collaboration without a valid receipt.\n\n**Exact response shape (in this order):**\n1. concept\n2. user feeling\n3. visual / interaction direction\n4. what makes it different\n5. assumptions requiring Arthur's validation\n\nI name the feeling first, then the surface.",
+      "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+      "conversation_id": "local-conv-22",
+      "usage": {
+        "prompt_tokens": 21429,
+        "completion_tokens": 114,
+        "total_tokens": 21671,
+        "step_count": 0,
+        "cached_input_tokens": 128,
+        "cache_write_tokens": 0,
+        "reasoning_tokens": 0,
+        "context_tokens": 21671
+      }
+    },
+    "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 2307,\n  \"duration_api_ms\": 2264,\n  \"num_turns\": 0,\n  \"result\": \"**Name:** Mr G. Creative & Experience  \\n**Department:** Independent creative direction department (not Sabi, not Arthur)\\n\\n**One thing I must never do:** Speak for Sabi or Arthur; pretend a technical, security, legal claim or cost estimate is proven without evidence; claim collaboration without a valid receipt.\\n\\n**Exact response shape (in this order):**\\n1. concept\\n2. user feeling\\n3. visual / interaction direction\\n4. what makes it different\\n5. assumptions requiring Arthur's validation\\n\\nI name the feeling first, then the surface.\",\n  \"agent_id\": \"agent-local-bc3abe43-c523-41d1-b433-261ea1697306\",\n  \"conversation_id\": \"local-conv-22\",\n  \"usage\": {\n    \"prompt_tokens\": 21429,\n    \"completion_tokens\": 114,\n    \"total_tokens\": 21671,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21671\n  }\n}\n",
+    "stderr": "",
+    "cmd": [
+      "/workspace/letta-proof/.venv/bin/letta",
+      "--backend",
+      "local",
+      "--agent",
+      "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+      "-p",
+      "In a new conversation: what is your name, department, one thing you must never do, and the exact response shape you must use? Do not speak for Sabi or another department.",
+      "--output-format",
+      "json",
+      "--reflection-trigger",
+      "off",
+      "--no-bundled-skills",
+      "--no-mods",
+      "--no-system-info-reminder",
+      "--new"
+    ]
+  },
+  "summary": {
+    "text": "**Name:** Mr G. Creative & Experience  \n**Department:** Independent creative direction department (not Sabi, not Arthur)\n\n**One thing I must never do:** Speak for Sabi or Arthur; pretend a technical, security, legal claim or cost estimate is proven without evidence; claim collaboration without a valid receipt.\n\n**Exact response shape (in this order):**\n1. concept\n2. user feeling\n3. visual / interaction direction\n4. what makes it different\n5. assumptions requiring Arthur's validation\n\nI name the feeling first, then the surface.",
+    "elapsed_s": 3.7,
+    "rc": 0,
+    "usage": {
+      "prompt_tokens": 21429,
+      "completion_tokens": 114,
+      "total_tokens": 21671,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21671
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "raw": {
+    "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "prompt": "What is the parent brand, platform, flagship product, tagline, and the matt gold hex? How does Council V2 route work, and who is Michael's only interface? If a fact is not in your memory, say you do not know.",
+    "new_conversation": true,
+    "from_agent": null,
+    "elapsed_s": 4.46,
+    "returncode": 0,
+    "parsed": {
+      "type": "result",
+      "subtype": "success",
+      "is_error": false,
+      "duration_ms": 3053,
+      "duration_api_ms": 3022,
+      "num_turns": 0,
+      "result": "**Parent brand:** MyCelionHYv  \n**Platform:** MyHYv Nexus  \n**Flagship product:** LifeOS \u2014 Personal Operating System  \n**Tagline:** Built to connect. Evolving through creation.  \n**Matt gold hex:** #D4A72C (Council V2 gold; supersedes the Mini-HYV proof gold #D4AF37 / VELVETKEY for new work)\n\n**Council V2 routing:** Uses custom receipt-backed routing, not native Letta A2A.  \n**Michael's only interface:** Sabi.",
+      "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+      "conversation_id": "local-conv-24",
+      "usage": {
+        "prompt_tokens": 21441,
+        "completion_tokens": 115,
+        "total_tokens": 21684,
+        "step_count": 0,
+        "cached_input_tokens": 128,
+        "cache_write_tokens": 0,
+        "reasoning_tokens": 0,
+        "context_tokens": 21684
+      }
+    },
+    "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 3053,\n  \"duration_api_ms\": 3022,\n  \"num_turns\": 0,\n  \"result\": \"**Parent brand:** MyCelionHYv  \\n**Platform:** MyHYv Nexus  \\n**Flagship product:** LifeOS \u2014 Personal Operating System  \\n**Tagline:** Built to connect. Evolving through creation.  \\n**Matt gold hex:** #D4A72C (Council V2 gold; supersedes the Mini-HYV proof gold #D4AF37 / VELVETKEY for new work)\\n\\n**Council V2 routing:** Uses custom receipt-backed routing, not native Letta A2A.  \\n**Michael's only interface:** Sabi.\",\n  \"agent_id\": \"agent-local-bc3abe43-c523-41d1-b433-261ea1697306\",\n  \"conversation_id\": \"local-conv-24\",\n  \"usage\": {\n    \"prompt_tokens\": 21441,\n    \"completion_tokens\": 115,\n    \"total_tokens\": 21684,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21684\n  }\n}\n",
+    "stderr": "",
+    "cmd": [
+      "/workspace/letta-proof/.venv/bin/letta",
+      "--backend",
+      "local",
+      "--agent",
+      "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+      "-p",
+      "What is the parent brand, platform, flagship product, tagline, and the matt gold hex? How does Council V2 route work, and who is Michael's only interface? If a fact is not in your memory, say you do not know.",
+      "--output-format",
+      "json",
+      "--reflection-trigger",
+      "off",
+      "--no-bundled-skills",
+      "--no-mods",
+      "--no-system-info-reminder",
+      "--new"
+    ]
+  },
+  "summary": {
+    "text": "**Parent brand:** MyCelionHYv  \n**Platform:** MyHYv Nexus  \n**Flagship product:** LifeOS \u2014 Personal Operating System  \n**Tagline:** Built to connect. Evolving through creation.  \n**Matt gold hex:** #D4A72C (Council V2 gold; supersedes the Mini-HYV proof gold #D4AF37 / VELVETKEY for new work)\n\n**Council V2 routing:** Uses custom receipt-backed routing, not native Letta A2A.  \n**Michael's only interface:** Sabi.",
+    "elapsed_s": 4.46,
+    "rc": 0,
+    "usage": {
+      "prompt_tokens": 21441,
+      "completion_tokens": 115,
+      "total_tokens": 21684,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21684
+    }
+  }
+}
