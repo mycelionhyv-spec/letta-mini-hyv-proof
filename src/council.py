@@ -202,19 +202,29 @@ class ReceiptCouncil:
             "receipts. They are not native Letta messages.\n"
             "Write one decision for Michael. Challenge the weakest assumption. "
             "Do not claim any department spoke unless you cite its exact receipt "
-            "as [receipt:ID]. Do not invent findings or implementation status.\n\n"
+            "as [receipt:ID]. Do not invent findings or implementation status.\n"
+            "You MUST copy these exact tags into the decision, character-for-character:\n"
+            + "\n".join(f"[receipt:{r.id}]" for r in receipts)
+            + "\nIf you omit any tag, the run is invalid.\n\n"
             f"Owner request from {principal}:\n{task}\n\n"
             f"Evidence:\n{evidence}"
         )
         raw = self._call(self.agents["sabi"]["id"], prompt)
         answer = text_of(raw).strip()
         if not answer:
+            self._persist_failure(request_id, receipts, "", "empty decision")
             raise CouncilError("Sabi produced no usable decision.")
         cited = tuple(dict.fromkeys(RECEIPT_RE.findall(answer)))
         allowed = {r.id for r in receipts}
         missing = [r.id for r in receipts if r.id not in cited]
         invalid = [rid for rid in cited if rid not in allowed]
         if missing or invalid:
+            self._persist_failure(
+                request_id,
+                receipts,
+                answer,
+                f"missing={missing or 'none'} invalid={invalid or 'none'}",
+            )
             raise CouncilError(
                 "Decision receipt invariant failed: "
                 f"missing={missing or 'none'} invalid={invalid or 'none'}"
@@ -253,4 +263,27 @@ class ReceiptCouncil:
             },
         }
         path = self.evidence_dir / f"council-{decision.request_id}.json"
+        path.write_text(json.dumps(payload, indent=2) + "\n")
+
+    def _persist_failure(
+        self,
+        request_id: str,
+        receipts: tuple[Receipt, ...],
+        answer: str,
+        reason: str,
+    ) -> None:
+        self.evidence_dir.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "class": "custom receipt-backed routing; not native Letta A2A",
+            "status": "FAIL_CLOSED",
+            "request_id": request_id,
+            "reason": reason,
+            "total_reported_tokens": self.reported_tokens,
+            "receipts": [r.public() for r in receipts],
+            "decision": {
+                "answer": answer,
+                "cited_receipt_ids": list(dict.fromkeys(RECEIPT_RE.findall(answer))),
+            },
+        }
+        path = self.evidence_dir / f"council-{request_id}.fail.json"
         path.write_text(json.dumps(payload, indent=2) + "\n")

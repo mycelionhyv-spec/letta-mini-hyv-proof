@@ -1,0 +1,29 @@
+ROUTING: custom receipt-backed routing; not native Letta A2A
+RECEIPTS: rcpt-fb7f0eaf1b55, rcpt-05accd07149b
+TOKENS: 67332
+
+[receipt:rcpt-fb7f0eaf1b55]  
+[receipt:rcpt-05accd07149b]
+
+**Decision**
+
+Proceed with the MVP for a private daily reflection feature in LifeOS V1.
+
+**Scope (MVP, 2–4 hours)**  
+- Local JSON or SQLite table: `reflections(user_id, date, text, created_at)`.  
+- One entry per calendar day; overwrite until midnight local time.  
+- 280-char soft limit, 2000-char hard cap.  
+- Simple input form, list view, date picker, and single-file markdown export.  
+- Feature flag; no encryption, no cloud sync, no search, no AI.
+
+**Risks**  
+- This would be the first real persistent store beyond the mock key `lifeos.mock.v2`; unknown whether a V1 persistence contract already exists.  
+- Storage grows unbounded without retention limits.  
+- Privacy exposure risk via sync/export flows that do not yet exist.  
+- Scope creep into journaling, prompts, or analytics.
+
+**Weakest assumption challenged**  
+Both receipts assume encryption and receipt-backed storage are available or can be deferred without consequence. [receipt:rcpt-05accd07149b] explicitly flags the encryption key model as unknown. [receipt:rcpt-fb7f0eaf1b55] does not address encryption at all. The MVP recommendation in [receipt:rcpt-fb7f0eaf1b55] defers encryption to V2, yet [receipt:rcpt-05accd07149b] states AES-256 is recommended for V1. This contradiction is unresolved.
+
+**Next step**  
+Arthur validates whether the receipt-backed storage pattern already supports private user-scoped data for this use case, or if a new receipt type and encryption approach are required before any code is written.
