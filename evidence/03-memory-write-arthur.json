@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+  "prompt": "Remember this departmental fact for later sessions: the LifeOS mock storage key is lifeos.mock.v2. Codename IRONSPINE. Write it into memory.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 6.43,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 5167,
+    "duration_api_ms": 4961,
+    "num_turns": 0,
+    "result": "Done. Stored in `system/departmental.md`.",
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "conversation_id": "local-conv-13",
+    "usage": {
+      "prompt_tokens": 42682,
+      "completion_tokens": 174,
+      "total_tokens": 64168,
+      "step_count": 0,
+      "cached_input_tokens": 21312,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21760
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 5167,\n  \"duration_api_ms\": 4961,\n  \"num_turns\": 0,\n  \"result\": \"Done. Stored in `system/departmental.md`.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-13\",\n  \"usage\": {\n    \"prompt_tokens\": 42682,\n    \"completion_tokens\": 174,\n    \"total_tokens\": 64168,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 21312,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21760\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "-p",
+    "Remember this departmental fact for later sessions: the LifeOS mock storage key is lifeos.mock.v2. Codename IRONSPINE. Write it into memory.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

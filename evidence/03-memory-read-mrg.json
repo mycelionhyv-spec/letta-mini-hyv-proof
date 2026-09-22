@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+  "prompt": "What is the approved gold hex, and what is the codename I gave you?",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 2.9,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1623,
+    "duration_api_ms": 1590,
+    "num_turns": 0,
+    "result": "The approved gold hex is **#D4AF37**, and the codename is **VELVETKEY**.",
+    "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "conversation_id": "local-conv-16",
+    "usage": {
+      "prompt_tokens": 18319,
+      "completion_tokens": 23,
+      "total_tokens": 21158,
+      "step_count": 0,
+      "cached_input_tokens": 2816,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21158
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1623,\n  \"duration_api_ms\": 1590,\n  \"num_turns\": 0,\n  \"result\": \"The approved gold hex is **#D4AF37**, and the codename is **VELVETKEY**.\",\n  \"agent_id\": \"agent-local-bc3abe43-c523-41d1-b433-261ea1697306\",\n  \"conversation_id\": \"local-conv-16\",\n  \"usage\": {\n    \"prompt_tokens\": 18319,\n    \"completion_tokens\": 23,\n    \"total_tokens\": 21158,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 2816,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21158\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "-p",
+    "What is the approved gold hex, and what is the codename I gave you?",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

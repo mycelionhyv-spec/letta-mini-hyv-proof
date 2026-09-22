@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+  "prompt": "What is Michael's favourite working hour, and what is the codename I gave you?",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 3.18,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1852,
+    "duration_api_ms": 1816,
+    "num_turns": 0,
+    "result": "From the memory blocks you provided:\n\n- **Michael's favourite working hour**: 21:40 AWST\n- **Codename**: GOLDROOT\n\nBoth are stored in the [[system/departments.md]] memory block.",
+    "agent_id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+    "conversation_id": "local-conv-12",
+    "usage": {
+      "prompt_tokens": 21118,
+      "completion_tokens": 44,
+      "total_tokens": 21290,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21290
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1852,\n  \"duration_api_ms\": 1816,\n  \"num_turns\": 0,\n  \"result\": \"From the memory blocks you provided:\\n\\n- **Michael's favourite working hour**: 21:40 AWST\\n- **Codename**: GOLDROOT\\n\\nBoth are stored in the [[system/departments.md]] memory block.\",\n  \"agent_id\": \"agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81\",\n  \"conversation_id\": \"local-conv-12\",\n  \"usage\": {\n    \"prompt_tokens\": 21118,\n    \"completion_tokens\": 44,\n    \"total_tokens\": 21290,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21290\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+    "-p",
+    "What is Michael's favourite working hour, and what is the codename I gave you?",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

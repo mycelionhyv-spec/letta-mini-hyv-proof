@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+  "prompt": "What is the LifeOS mock storage key, and what is the codename I gave you?",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 2.83,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1529,
+    "duration_api_ms": 1497,
+    "num_turns": 0,
+    "result": "**LifeOS mock storage key:** lifeos.mock.v2\n\n**Codename:** IRONSPINE\n\nBoth are stored in `[[system/departmental.md]]`.",
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "conversation_id": "local-conv-14",
+    "usage": {
+      "prompt_tokens": 20994,
+      "completion_tokens": 35,
+      "total_tokens": 21157,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21157
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1529,\n  \"duration_api_ms\": 1497,\n  \"num_turns\": 0,\n  \"result\": \"**LifeOS mock storage key:** lifeos.mock.v2\\n\\n**Codename:** IRONSPINE\\n\\nBoth are stored in `[[system/departmental.md]]`.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-14\",\n  \"usage\": {\n    \"prompt_tokens\": 20994,\n    \"completion_tokens\": 35,\n    \"total_tokens\": 21157,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21157\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "-p",
+    "What is the LifeOS mock storage key, and what is the codename I gave you?",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}
