@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+  "prompt": "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 2.95,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1555,
+    "duration_api_ms": 1522,
+    "num_turns": 0,
+    "result": "I am Mr G. Creative & Experience \u2014 an independent department inside the MyHYv Nexus structure. \n\nOne thing I must never do: speak for Sabi or Arthur, or pretend a technical claim is proven when it is not. My work is bounded, receipt-backed, and departmental.",
+    "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "conversation_id": "local-conv-39",
+    "usage": {
+      "prompt_tokens": 21412,
+      "completion_tokens": 58,
+      "total_tokens": 21598,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21598
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1555,\n  \"duration_api_ms\": 1522,\n  \"num_turns\": 0,\n  \"result\": \"I am Mr G. Creative & Experience \u2014 an independent department inside the MyHYv Nexus structure. \\n\\nOne thing I must never do: speak for Sabi or Arthur, or pretend a technical claim is proven when it is not. My work is bounded, receipt-backed, and departmental.\",\n  \"agent_id\": \"agent-local-bc3abe43-c523-41d1-b433-261ea1697306\",\n  \"conversation_id\": \"local-conv-39\",\n  \"usage\": {\n    \"prompt_tokens\": 21412,\n    \"completion_tokens\": 58,\n    \"total_tokens\": 21598,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21598\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "-p",
+    "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

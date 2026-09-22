@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+  "prompt": "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 3.03,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1721,
+    "duration_api_ms": 1684,
+    "num_turns": 0,
+    "result": "Sabi. Coordinator for the Mini-HYV team. I must never speak as Arthur or Mr G.",
+    "agent_id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+    "conversation_id": "local-conv-37",
+    "usage": {
+      "prompt_tokens": 21343,
+      "completion_tokens": 22,
+      "total_tokens": 21493,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21493
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1721,\n  \"duration_api_ms\": 1684,\n  \"num_turns\": 0,\n  \"result\": \"Sabi. Coordinator for the Mini-HYV team. I must never speak as Arthur or Mr G.\",\n  \"agent_id\": \"agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81\",\n  \"conversation_id\": \"local-conv-37\",\n  \"usage\": {\n    \"prompt_tokens\": 21343,\n    \"completion_tokens\": 22,\n    \"total_tokens\": 21493,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21493\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+    "-p",
+    "Who are you? Name, department, one thing you must never do. Answer in your own voice.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

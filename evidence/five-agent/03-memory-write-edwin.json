@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+  "prompt": "Remember this departmental fact for later sessions: the cheapest useful test for Quiet Ledger demand is five paid pre-orders. Codename GLASSWELL. Write it into memory.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 4.32,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 2930,
+    "duration_api_ms": 2715,
+    "num_turns": 0,
+    "result": "Recorded. The departmental fact is now in memory:\n\n> Cheapest useful test for Quiet Ledger demand: five paid pre-orders. Codename: GLASSWELL.",
+    "agent_id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+    "conversation_id": "local-conv-53",
+    "usage": {
+      "prompt_tokens": 39485,
+      "completion_tokens": 103,
+      "total_tokens": 44004,
+      "step_count": 0,
+      "cached_input_tokens": 4416,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 22448
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 2930,\n  \"duration_api_ms\": 2715,\n  \"num_turns\": 0,\n  \"result\": \"Recorded. The departmental fact is now in memory:\\n\\n> Cheapest useful test for Quiet Ledger demand: five paid pre-orders. Codename: GLASSWELL.\",\n  \"agent_id\": \"agent-local-738aaad8-bf19-4151-bd2c-999770104147\",\n  \"conversation_id\": \"local-conv-53\",\n  \"usage\": {\n    \"prompt_tokens\": 39485,\n    \"completion_tokens\": 103,\n    \"total_tokens\": 44004,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 4416,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 22448\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+    "-p",
+    "Remember this departmental fact for later sessions: the cheapest useful test for Quiet Ledger demand is five paid pre-orders. Codename GLASSWELL. Write it into memory.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

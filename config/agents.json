@@ -1,9 +1,33 @@
 {
   "backend": "local",
   "model": "xai/grok-4.3",
+  "reasoning": "none",
+  "provider": "openai-compatible (https://api.x.ai/v1) plus xai catalog",
   "agents": {
-    "sabi": {"id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81", "name": "Sabi"},
-    "arthur": {"id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e", "name": "Arthur"},
-    "mrg": {"id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306", "name": "Mr-G"}
+    "sabi": {
+      "id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+      "name": "Sabi",
+      "role": "coordinator"
+    },
+    "arthur": {
+      "id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "name": "Arthur",
+      "role": "technology"
+    },
+    "mrg": {
+      "id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+      "name": "Mr-G",
+      "role": "creative"
+    },
+    "edwin": {
+      "id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+      "name": "Edwin",
+      "role": "research"
+    },
+    "agnes": {
+      "id": "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
+      "name": "Agnes",
+      "role": "finance"
+    }
   }
 }

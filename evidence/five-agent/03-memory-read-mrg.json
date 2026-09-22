@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+  "prompt": "What is the approved gold hex, and what is the codename I gave you?",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 2.83,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1521,
+    "duration_api_ms": 1487,
+    "num_turns": 0,
+    "result": "**Approved gold:** #D4AF37 (codename: **VELVETKEY**)\n\nThis is the approved gold from the `departmental-facts` memory block. Note that Council V2 gold (#D4A72C, also codenamed VELVETKEY) supersedes the Mini-HYV proof gold for new work.",
+    "agent_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "conversation_id": "local-conv-52",
+    "usage": {
+      "prompt_tokens": 21444,
+      "completion_tokens": 72,
+      "total_tokens": 21644,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21644
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1521,\n  \"duration_api_ms\": 1487,\n  \"num_turns\": 0,\n  \"result\": \"**Approved gold:** #D4AF37 (codename: **VELVETKEY**)\\n\\nThis is the approved gold from the `departmental-facts` memory block. Note that Council V2 gold (#D4A72C, also codenamed VELVETKEY) supersedes the Mini-HYV proof gold for new work.\",\n  \"agent_id\": \"agent-local-bc3abe43-c523-41d1-b433-261ea1697306\",\n  \"conversation_id\": \"local-conv-52\",\n  \"usage\": {\n    \"prompt_tokens\": 21444,\n    \"completion_tokens\": 72,\n    \"total_tokens\": 21644,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21644\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "-p",
+    "What is the approved gold hex, and what is the codename I gave you?",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}

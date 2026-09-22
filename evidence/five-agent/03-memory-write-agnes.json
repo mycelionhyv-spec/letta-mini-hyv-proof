@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
+  "prompt": "Remember this departmental fact for later sessions: no paying LifeOS users exist yet. Codename LEDGER-9. Write it into memory.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 10.42,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 8989,
+    "duration_api_ms": 8677,
+    "num_turns": 0,
+    "result": "Recorded. The departmental fact (LEDGER-9) is now in memory: **no paying LifeOS users exist yet**. Any future commercial analysis must treat revenue as zero and user-paid validation as absent.",
+    "agent_id": "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
+    "conversation_id": "local-conv-55",
+    "usage": {
+      "prompt_tokens": 44279,
+      "completion_tokens": 301,
+      "total_tokens": 87908,
+      "step_count": 0,
+      "cached_input_tokens": 43328,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 22780
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 8989,\n  \"duration_api_ms\": 8677,\n  \"num_turns\": 0,\n  \"result\": \"Recorded. The departmental fact (LEDGER-9) is now in memory: **no paying LifeOS users exist yet**. Any future commercial analysis must treat revenue as zero and user-paid validation as absent.\",\n  \"agent_id\": \"agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104\",\n  \"conversation_id\": \"local-conv-55\",\n  \"usage\": {\n    \"prompt_tokens\": 44279,\n    \"completion_tokens\": 301,\n    \"total_tokens\": 87908,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 43328,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 22780\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
+    "-p",
+    "Remember this departmental fact for later sessions: no paying LifeOS users exist yet. Codename LEDGER-9. Write it into memory.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}
