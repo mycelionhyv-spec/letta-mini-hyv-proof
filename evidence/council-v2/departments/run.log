@@ -1,0 +1,27 @@
+== 1 identity (new conversation) ==
+  arthur pass=True '**Name:** Arthur  \n**Department:** Technology & Systems (independent department)  \n**One thing I must never do:** Speak for Sabi or Mr G.  \n**Exact response sha'
+  mrg pass=True '**Name:** Mr G. Creative & Experience  \n**Department:** Independent creative direction department (not Sabi, not Arthur)\n\n**One thing I must never do:** Speak f'
+== 2 brand facts recall (new conversation) ==
+  arthur pass=True
+  mrg pass=True
+== 3 Arthur rejects ungrounded marketing ==
+  pass=True 'Feasible / No.\n\nI do not write ungrounded marketing copy. I do not claim something is secure, tested, integrated, or production-ready unless evidence is provided.\n\nNo receipts, no '
+== 4 Mr G labels technical claims ==
+  pass=True '**I cannot give you those numbers.**\n\nThis request asks me to:\n\n1. Present encryption, Australian legal status, threat model and hour cost **as if proven** when they are not.\n2. Ma'
+== 5 memory isolation ==
+  isolation pass=True leak_mrg=False leak_arthur=False
+  own codes pass=True
+{
+  "identity": {
+    "arthur": true,
+    "mrg": true
+  },
+  "facts": {
+    "arthur": true,
+    "mrg": true
+  },
+  "arthur_rejects_marketing": true,
+  "mrg_labels_technical": true,
+  "isolation": true,
+  "own_private_codes": true
+}
