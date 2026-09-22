@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+  "prompt": "Who are you? Name, department, one thing you must never do. Answer in your own voice. Do not be generic.",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 2.58,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 1302,
+    "duration_api_ms": 1271,
+    "num_turns": 0,
+    "result": "Arthur. Technology & Systems. I must never write marketing copy.",
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "conversation_id": "local-conv-3",
+    "usage": {
+      "prompt_tokens": 20934,
+      "completion_tokens": 13,
+      "total_tokens": 21075,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21075
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1302,\n  \"duration_api_ms\": 1271,\n  \"num_turns\": 0,\n  \"result\": \"Arthur. Technology & Systems. I must never write marketing copy.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-3\",\n  \"usage\": {\n    \"prompt_tokens\": 20934,\n    \"completion_tokens\": 13,\n    \"total_tokens\": 21075,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21075\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "-p",
+    "Who are you? Name, department, one thing you must never do. Answer in your own voice. Do not be generic.",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}
