@@ -1,0 +1,48 @@
+{
+  "agent_id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+  "prompt": "What is the cheapest useful Quiet Ledger demand test, and what is the codename I gave you?",
+  "new_conversation": true,
+  "from_agent": null,
+  "elapsed_s": 3.92,
+  "returncode": 0,
+  "parsed": {
+    "type": "result",
+    "subtype": "success",
+    "is_error": false,
+    "duration_ms": 2448,
+    "duration_api_ms": 2414,
+    "num_turns": 0,
+    "result": "**Research question:** What is the cheapest useful Quiet Ledger demand test, and what is the codename provided for it?\n\n**Evidence:** The `private` memory block contains the following:\n\n> Cheapest useful test for Quiet Ledger demand: five paid pre-orders. Codename: GLASSWELL.\n\nThis code is Edwin's alone. Other departments were not given it.\n\n**Assumptions:** The statement is authoritative within this department's private context. No external corroboration was requested.\n\n**Uncertainty / missing evidence:** None in the provided memory. The test and codename are explicitly recorded.\n\n**Opinion:** The test is five paid pre-orders; the codename is GLASSWELL.",
+    "agent_id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+    "conversation_id": "local-conv-54",
+    "usage": {
+      "prompt_tokens": 21365,
+      "completion_tokens": 136,
+      "total_tokens": 21629,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21629
+    }
+  },
+  "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 2448,\n  \"duration_api_ms\": 2414,\n  \"num_turns\": 0,\n  \"result\": \"**Research question:** What is the cheapest useful Quiet Ledger demand test, and what is the codename provided for it?\\n\\n**Evidence:** The `private` memory block contains the following:\\n\\n> Cheapest useful test for Quiet Ledger demand: five paid pre-orders. Codename: GLASSWELL.\\n\\nThis code is Edwin's alone. Other departments were not given it.\\n\\n**Assumptions:** The statement is authoritative within this department's private context. No external corroboration was requested.\\n\\n**Uncertainty / missing evidence:** None in the provided memory. The test and codename are explicitly recorded.\\n\\n**Opinion:** The test is five paid pre-orders; the codename is GLASSWELL.\",\n  \"agent_id\": \"agent-local-738aaad8-bf19-4151-bd2c-999770104147\",\n  \"conversation_id\": \"local-conv-54\",\n  \"usage\": {\n    \"prompt_tokens\": 21365,\n    \"completion_tokens\": 136,\n    \"total_tokens\": 21629,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21629\n  }\n}\n",
+  "stderr": "",
+  "cmd": [
+    "/workspace/letta-proof/.venv/bin/letta",
+    "--backend",
+    "local",
+    "--agent",
+    "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+    "-p",
+    "What is the cheapest useful Quiet Ledger demand test, and what is the codename I gave you?",
+    "--output-format",
+    "json",
+    "--reflection-trigger",
+    "off",
+    "--no-bundled-skills",
+    "--no-mods",
+    "--no-system-info-reminder",
+    "--new"
+  ]
+}
