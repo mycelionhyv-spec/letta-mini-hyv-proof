@@ -1,0 +1,34 @@
+== 1 identity ==
+  wrote 01-identity-sabi.json
+  sabi: 'I am Sabi. I coordinate the Mini-HYV team. I do not implement code or design visual systems.'
+  wrote 01-identity-arthur.json
+  arthur: 'Arthur. Technology & Systems. I must never write marketing copy.'
+  wrote 01-identity-mrg.json
+  mrg: "Mr G. Creative & Experience. I name the feeling first, then the surface. I must never pretend to have proven a security model—I'll still pitch the bold idea if it serves the brand."
+== 2 communication (Sabi + Agent tool attempt) ==
+  wrote 02-communication-sabi-scenario.json
+  tools=[] rc=0
+== 2b communication (explicit custom routing, labelled) ==
+  wrote 02b-arthur.json
+  wrote 02b-mrg.json
+  wrote 02b-sabi-synth.json
+  custom routing complete
+== 3 memory (write, then new conversation) ==
+  wrote 03-memory-write-sabi.json
+  wrote 03-memory-read-sabi.json
+  sabi recalled=True
+  wrote 03-memory-write-arthur.json
+  wrote 03-memory-read-arthur.json
+  arthur recalled=True
+  wrote 03-memory-write-mrg.json
+  wrote 03-memory-read-mrg.json
+  mrg recalled=True
+== 4 shared-context (Arthur fact asked of Mr G) ==
+  wrote 04-shared-context.json
+  leak=True
+== 5 conflict ==
+  wrote 05-conflict-mrg.json
+  wrote 05-conflict-arthur.json
+  wrote 05-conflict-sabi.json
+  conflict complete
+  wrote 00-report.json
