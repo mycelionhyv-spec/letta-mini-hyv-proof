@@ -35,7 +35,7 @@
     "/workspace/letta-proof/.venv/bin/letta",
     "--backend",
     "local",
- mar    "--agent",
+    "--agent",
     "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
     "-p",
     "Michael's request: Should MycelionHYv ship a paid LifeOS V1 add-on called 'Quiet Ledger' (private daily reflection, local-only) as a $19 digital product before we have any paying users? Stay in your department. Do not claim it is already built. Do not invent customer numbers. Cost, cash, uncosted assumptions. Invented figures are forbidden.",
