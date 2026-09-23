@@ -10,16 +10,22 @@
 | config/.env.example | Env template, no keys |
 | src/ask.py | Headless Letta Code client |
 | src/run_proof.py | Five-agent identity, memory, routing, conflict |
+| src/blind_isolation.py | Fresh-marker prompts and strict response checks |
+| src/run_blind_isolation.py | Targeted live runner; requires original local Letta store |
+| src/reconcile_usage.py | Per-call token field reconciliation and check mode |
 | src/integration_map.md | Read-only map onto the current LifeOS tree |
 | tests/test_agents_config.py | Offline check that five agent ids are present |
+| tests/test_verification.py | Offline guards for blind prompts and token arithmetic |
 | evidence/five-agent/VERDICT.md | CONDITIONAL five-agent verdict |
 | evidence/five-agent/COST.md | Services, models, tokens |
+| evidence/five-agent/token-reconciliation.json | All 28 archived calls with per-call fields and totals |
+| evidence/five-agent/REVIEW_2026-09-23.md | Check verdict and integration gate |
 | evidence/five-agent/00-report.md | Human transcript summary |
 | evidence/five-agent/00-report.json | Machine report |
 | evidence/five-agent/01-identity-*.json | Live identity + refusal replies |
 | evidence/five-agent/02-team-*.json | Custom-routed five-agent Quiet Ledger decision |
 | evidence/five-agent/03-memory-*.json | Write + new-conversation recall |
-| evidence/five-agent/04-isolation-*.json | Cross-department token isolation |
+| evidence/five-agent/04-isolation-*.json | Archived contaminated cross-department prompts; prior PASS withdrawn |
 | evidence/five-agent/05-conflict-*.json | Financial vs creative disagreement |
 | evidence/ | Original three-agent proof (unchanged history) |
 

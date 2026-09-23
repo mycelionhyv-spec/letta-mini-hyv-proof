@@ -53,4 +53,14 @@ LifeOS integration is not included. No website changes. These bots are not produ
 
 ## Verdict
 
-See `evidence/five-agent/VERDICT.md`. Short version: **CONDITIONAL.** Identity and memory work for five agents. Native A2A does not.
+See `evidence/five-agent/VERDICT.md`. Short version: **CONDITIONAL.** Five identities and own-memory recall were recorded. The archived isolation result is withdrawn pending a fresh blind live run and local storage inspection. Native A2A remains unproven.
+
+## Verification checks (2026-09-23)
+
+```bash
+python3 src/reconcile_usage.py --check
+python3 -m unittest discover -s tests -v
+python3 src/run_blind_isolation.py
+```
+
+The first two commands are offline. The last requires the **original local Letta agent store** and its configured model credential. It generates fresh synthetic markers, runs blind cross-department prompts and saves exact prompts, responses and raw results in a new evidence directory. It labels storage isolation **UNVERIFIED** until someone also inspects the local MemFS namespaces; model responses alone cannot prove the boundary. Do not commit credentials or describe a code-only run as live proof.
