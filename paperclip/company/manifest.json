@@ -43,18 +43,11 @@
       "icon": null,
       "capabilities": "Read a single assigned Paperclip task and answer through the pinned Letta id. No schedules.",
       "reportsToSlug": null,
-      "adapterType": "process",
+      "adapterType": "http",
       "adapterConfig": {
-        "command": "python3",
-        "args": [
-          "src/paperclip_bridge.py"
-        ],
-        "cwd": "REPLACE_WITH_ABSOLUTE_CHECKOUT",
-        "timeoutSec": 180,
-        "graceSec": 15,
-        "env": {
-          "PAPERCLIP_WORKER_SLUG": "arthur"
-        }
+        "url": "http://127.0.0.1:8765/wake/arthur",
+        "method": "POST",
+        "timeoutMs": 180000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -75,7 +68,8 @@
         "letta_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
         "resolved": false,
         "imported": false,
-        "sabi_included": false
+        "sabi_included": false,
+        "taskDelivery": "http adapter posts context.taskId or context.issueId; process adapter does not"
       }
     },
     {
@@ -88,18 +82,11 @@
       "icon": null,
       "capabilities": "Read a single assigned Paperclip task and answer through the pinned Letta id. No schedules.",
       "reportsToSlug": null,
-      "adapterType": "process",
+      "adapterType": "http",
       "adapterConfig": {
-        "command": "python3",
-        "args": [
-          "src/paperclip_bridge.py"
-        ],
-        "cwd": "REPLACE_WITH_ABSOLUTE_CHECKOUT",
-        "timeoutSec": 180,
-        "graceSec": 15,
-        "env": {
-          "PAPERCLIP_WORKER_SLUG": "mrg"
-        }
+        "url": "http://127.0.0.1:8765/wake/mrg",
+        "method": "POST",
+        "timeoutMs": 180000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -120,7 +107,8 @@
         "letta_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
         "resolved": false,
         "imported": false,
-        "sabi_included": false
+        "sabi_included": false,
+        "taskDelivery": "http adapter posts context.taskId or context.issueId; process adapter does not"
       }
     },
     {
@@ -133,18 +121,11 @@
       "icon": null,
       "capabilities": "Read a single assigned Paperclip task and answer through the pinned Letta id. No schedules.",
       "reportsToSlug": null,
-      "adapterType": "process",
+      "adapterType": "http",
       "adapterConfig": {
-        "command": "python3",
-        "args": [
-          "src/paperclip_bridge.py"
-        ],
-        "cwd": "REPLACE_WITH_ABSOLUTE_CHECKOUT",
-        "timeoutSec": 180,
-        "graceSec": 15,
-        "env": {
-          "PAPERCLIP_WORKER_SLUG": "edwin"
-        }
+        "url": "http://127.0.0.1:8765/wake/edwin",
+        "method": "POST",
+        "timeoutMs": 180000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -165,7 +146,8 @@
         "letta_id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
         "resolved": false,
         "imported": false,
-        "sabi_included": false
+        "sabi_included": false,
+        "taskDelivery": "http adapter posts context.taskId or context.issueId; process adapter does not"
       }
     },
     {
@@ -178,18 +160,11 @@
       "icon": null,
       "capabilities": "Read a single assigned Paperclip task and answer through the pinned Letta id. No schedules.",
       "reportsToSlug": null,
-      "adapterType": "process",
+      "adapterType": "http",
       "adapterConfig": {
-        "command": "python3",
-        "args": [
-          "src/paperclip_bridge.py"
-        ],
-        "cwd": "REPLACE_WITH_ABSOLUTE_CHECKOUT",
-        "timeoutSec": 180,
-        "graceSec": 15,
-        "env": {
-          "PAPERCLIP_WORKER_SLUG": "agnes"
-        }
+        "url": "http://127.0.0.1:8765/wake/agnes",
+        "method": "POST",
+        "timeoutMs": 180000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -210,7 +185,8 @@
         "letta_id": "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
         "resolved": false,
         "imported": false,
-        "sabi_included": false
+        "sabi_included": false,
+        "taskDelivery": "http adapter posts context.taskId or context.issueId; process adapter does not"
       }
     },
     {
@@ -223,18 +199,11 @@
       "icon": null,
       "capabilities": "Read a single assigned Paperclip task and answer through the pinned Letta id. No schedules.",
       "reportsToSlug": null,
-      "adapterType": "process",
+      "adapterType": "http",
       "adapterConfig": {
-        "command": "python3",
-        "args": [
-          "src/paperclip_bridge.py"
-        ],
-        "cwd": "REPLACE_WITH_ABSOLUTE_CHECKOUT",
-        "timeoutSec": 180,
-        "graceSec": 15,
-        "env": {
-          "PAPERCLIP_WORKER_SLUG": "cyber"
-        }
+        "url": "http://127.0.0.1:8765/wake/cyber",
+        "method": "POST",
+        "timeoutMs": 180000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -255,7 +224,8 @@
         "letta_id": null,
         "resolved": false,
         "imported": false,
-        "sabi_included": false
+        "sabi_included": false,
+        "taskDelivery": "http adapter posts context.taskId or context.issueId; process adapter does not"
       }
     }
   ],

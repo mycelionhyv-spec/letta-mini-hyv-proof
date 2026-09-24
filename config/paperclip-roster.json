@@ -10,7 +10,8 @@
       "paperclip_role": "engineer",
       "letta_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
       "resolved": false,
-      "letta_cli": "Agent not found"
+      "letta_cli": "Agent not found",
+      "paperclip_agent_id": null
     },
     "mrg": {
       "name": "Mr G",
@@ -18,7 +19,8 @@
       "paperclip_role": "designer",
       "letta_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
       "resolved": false,
-      "letta_cli": "Agent not found"
+      "letta_cli": "Agent not found",
+      "paperclip_agent_id": null
     },
     "edwin": {
       "name": "Edwin",
@@ -27,7 +29,8 @@
       "letta_id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
       "resolved": false,
       "letta_cli": "Agent not found",
-      "do_not_substitute": "agent-local-b867273f-b849-40de-b616-e5cf9b45239b"
+      "do_not_substitute": "agent-local-b867273f-b849-40de-b616-e5cf9b45239b",
+      "paperclip_agent_id": null
     },
     "agnes": {
       "name": "Agnes",
@@ -35,7 +38,8 @@
       "paperclip_role": "cfo",
       "letta_id": "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
       "resolved": false,
-      "letta_cli": "Agent not found"
+      "letta_cli": "Agent not found",
+      "paperclip_agent_id": null
     },
     "cyber": {
       "name": "Cyber",
@@ -44,7 +48,8 @@
       "letta_id": null,
       "resolved": false,
       "letta_cli": "not created on this store",
-      "reason": "Creating Cyber here would put it on the money-Edwin backend, not with Arthur, Mr G, Edwin Research or Agnes."
+      "reason": "Creating Cyber here would put it on the money-Edwin backend, not with Arthur, Mr G, Edwin Research or Agnes.",
+      "paperclip_agent_id": null
     }
   },
   "excluded": {
@@ -58,5 +63,6 @@
       "role": "Money & Commitments",
       "reason": "Preserved. Different person from canonical Edwin Research. Not registered in Paperclip."
     }
-  }
+  },
+  "task_delivery": "Paperclip http adapter POST body context. The process adapter does not supply a task id, so it is not the company adapter."
 }

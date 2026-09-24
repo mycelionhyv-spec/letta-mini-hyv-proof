@@ -1,0 +1,9 @@
+Source: paperclipai/paperclip server/src/adapters/http/execute.ts on master, read 2026-09-25.
+Documented request shape is in docs/adapters/http.md. The code posts the heartbeat context unchanged.
+
+  const body = {
+    ...payloadTemplate,
+    agentId: agent.id,
+    runId,
+    context,
+  };

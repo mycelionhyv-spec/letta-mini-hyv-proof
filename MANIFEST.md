@@ -35,3 +35,4 @@ Not included: `.venv/`, LifeOS website source, API keys, Letta Cloud, Council V2
 | src/paperclip_bridge.py | Fail-closed Paperclip process bridge |
 | paperclip/company/ | Unimported company package |
 | docs/sabi-paperclip-handoff.md | Astra handoff; site was not changed |
+| evidence/paperclip-host-2026-09-25/STORE-SEARCH.md | Original store not found; import not started |

@@ -304,7 +304,140 @@ def default_invoke_letta(agent_id: str, prompt: str) -> dict[str, Any]:
     }
 
 
+def specific_task_id(context: Any) -> str:
+    """Use only the wake context's own task id. Never scan or guess a task."""
+    if not isinstance(context, dict):
+        raise BridgeError("blocked", "Paperclip wake context was missing", 3)
+    task = context.get("taskId")
+    issue = context.get("issueId")
+    task_id = task.strip() if isinstance(task, str) else ""
+    issue_id = issue.strip() if isinstance(issue, str) else ""
+    if task_id and issue_id and task_id != issue_id:
+        raise BridgeError("blocked", "context.taskId and context.issueId disagree", 2)
+    chosen = task_id or issue_id
+    if not chosen:
+        raise BridgeError("blocked", "Paperclip wake context has no specific task id", 3)
+    return chosen
+
+
+def worker_for_paperclip_agent(roster: dict[str, Any], agent_id: str, slug_hint: str | None) -> tuple[str, dict[str, Any]]:
+    matches = [
+        (slug, worker)
+        for slug, worker in roster.get("workers", {}).items()
+        if isinstance(worker, dict) and worker.get("paperclip_agent_id") == agent_id
+    ]
+    if len(matches) != 1:
+        raise BridgeError("blocked", "Paperclip agent id is not pinned to exactly one worker", 2)
+    slug, worker = matches[0]
+    if slug_hint and slug_hint != slug:
+        raise BridgeError("blocked", "Wake URL worker does not match the Paperclip agent id", 2)
+    return slug, worker
+
+
+def env_from_http_wake(body: Any, roster: dict[str, Any], slug_hint: str | None, environ: dict[str, str]) -> dict[str, str]:
+    if not isinstance(body, dict):
+        raise BridgeError("blocked", "Paperclip HTTP body was not an object", 3)
+    context = body.get("context")
+    task_id = specific_task_id(context)
+    agent_id = body.get("agentId")
+    run_id = body.get("runId")
+    if not isinstance(agent_id, str) or not agent_id.strip():
+        raise BridgeError("blocked", "Paperclip HTTP body has no agentId", 2)
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise BridgeError("blocked", "Paperclip HTTP body has no runId", 2)
+    company_id = environ.get("MYHYV_PAPERCLIP_COMPANY_ID", "").strip()
+    api_url = environ.get("PAPERCLIP_API_URL", "").strip()
+    api_key = environ.get("PAPERCLIP_API_KEY", "").strip()
+    if not company_id or not api_url or not api_key:
+        raise BridgeError("blocked", "Bridge is missing its pinned Paperclip company or API settings", 2)
+    # A company id inside the POST cannot choose the company.
+    slug, _worker = worker_for_paperclip_agent(roster, agent_id.strip(), slug_hint)
+    return {
+        "PAPERCLIP_AGENT_ID": agent_id.strip(),
+        "PAPERCLIP_COMPANY_ID": company_id,
+        "PAPERCLIP_API_URL": api_url,
+        "PAPERCLIP_API_KEY": api_key,
+        "PAPERCLIP_RUN_ID": run_id.strip(),
+        "PAPERCLIP_TASK_ID": task_id,
+        "PAPERCLIP_WORKER_SLUG": slug,
+    }
+
+
+def make_handler(roster: dict[str, Any], environ: dict[str, str], fetch_issue, invoke_letta, ledger_file: Path):
+    from http.server import BaseHTTPRequestHandler
+
+    class Handler(BaseHTTPRequestHandler):
+        def log_message(self, fmt: str, *args: Any) -> None:
+            return
+
+        def do_POST(self) -> None:  # noqa: N802
+            parts = [part for part in self.path.split("?")[0].split("/") if part]
+            slug_hint = parts[1] if len(parts) == 2 and parts[0] == "wake" else None
+            if not parts or parts[0] != "wake" or len(parts) > 2:
+                self._send(404, {"status": "blocked", "error": "Unknown path"})
+                return
+            length = int(self.headers.get("content-length", "0") or "0")
+            raw = self.rfile.read(length) if length else b""
+            try:
+                body = json.loads(raw.decode("utf-8"))
+                env = env_from_http_wake(body, roster, slug_hint, environ)
+                result = execute(
+                    env,
+                    roster=roster,
+                    fetch_issue=fetch_issue,
+                    invoke_letta=invoke_letta,
+                    ledger_file=ledger_file,
+                )
+            except BridgeError as exc:
+                self._send(422, {
+                    "status": exc.status,
+                    "error": str(exc),
+                    "paperclip_issue_marked_complete": False,
+                    "provider_spend_cap_enforced": False,
+                })
+                return
+            except Exception as exc:
+                self._send(500, {
+                    "status": "provider_error",
+                    "error": type(exc).__name__,
+                    "paperclip_issue_marked_complete": False,
+                })
+                return
+            self._send(200, result)
+
+        def _send(self, status: int, payload: dict[str, Any]) -> None:
+            data = json.dumps(payload).encode("utf-8")
+            self.send_response(status)
+            self.send_header("content-type", "application/json")
+            self.send_header("content-length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+
+    return Handler
+
+
+def serve(environ: dict[str, str] | None = None) -> None:
+    from http.server import ThreadingHTTPServer
+
+    environ = dict(os.environ if environ is None else environ)
+    host = "127.0.0.1"
+    port = int(environ.get("MYHYV_BRIDGE_PORT", "8765"))
+    roster = load_roster()
+    server = ThreadingHTTPServer((host, port), make_handler(
+        roster,
+        environ,
+        default_fetch_issue,
+        default_invoke_letta,
+        ledger_path(),
+    ))
+    print(f"listening {host} {server.server_address[1]}", file=sys.stderr, flush=True)
+    server.serve_forever()
+
+
 def main() -> int:
+    if "--serve" in sys.argv:
+        serve()
+        return 0
     try:
         result = execute(
             dict(os.environ),
