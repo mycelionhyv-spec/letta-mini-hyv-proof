@@ -9,6 +9,7 @@ budget, timeout and unresolved-ID cases exit non-zero before any model call.
 from __future__ import annotations
 
 import hashlib
+import hmac
 import json
 import os
 import sys
@@ -376,6 +377,18 @@ def make_handler(roster: dict[str, Any], environ: dict[str, str], fetch_issue, i
             if not parts or parts[0] != "wake" or len(parts) > 2:
                 self._send(404, {"status": "blocked", "error": "Unknown path"})
                 return
+            expected = environ.get("MYHYV_BRIDGE_WEBHOOK_TOKEN", "").strip()
+            provided = self.headers.get("X-MyHYv-Bridge-Token", "").strip()
+            if not expected:
+                self._send(503, {"status": "blocked", "error": "Bridge authentication is not configured"})
+                return
+            try:
+                authorized = bool(provided) and hmac.compare_digest(provided, expected)
+            except TypeError:
+                authorized = False
+            if not authorized:
+                self._send(401, {"status": "blocked", "error": "Unauthorized"})
+                return
             length = int(self.headers.get("content-length", "0") or "0")
             raw = self.rfile.read(length) if length else b""
             try:
@@ -422,6 +435,8 @@ def serve(environ: dict[str, str] | None = None) -> None:
     environ = dict(os.environ if environ is None else environ)
     host = "127.0.0.1"
     port = int(environ.get("MYHYV_BRIDGE_PORT", "8765"))
+    if not environ.get("MYHYV_BRIDGE_WEBHOOK_TOKEN", "").strip():
+        raise RuntimeError("MYHYV_BRIDGE_WEBHOOK_TOKEN is required; refusing to start unauthenticated")
     roster = load_roster()
     server = ThreadingHTTPServer((host, port), make_handler(
         roster,
