@@ -14,7 +14,10 @@ const body = {
 };
 const response = await fetch(url, {
   method: "POST",
-  headers: { "content-type": "application/json" },
+  headers: {
+    "content-type": "application/json",
+    ...(process.env.BRIDGE_TOKEN ? { "X-MyHYv-Bridge-Token": process.env.BRIDGE_TOKEN } : {}),
+  },
   body: JSON.stringify(body),
 });
 const text = await response.text();
