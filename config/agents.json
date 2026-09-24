@@ -2,8 +2,9 @@
   "backend": "local",
   "model": "xai/grok-4.3",
   "agents": {
-    "sabi": {"id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81", "name": "Sabi"},
-    "arthur": {"id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e", "name": "Arthur"},
-    "mrg": {"id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306", "name": "Mr-G"}
+    "sabi": {"id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81", "name": "Sabi", "role": "Coordinator"},
+    "arthur": {"id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e", "name": "Arthur", "role": "Technology & Systems"},
+    "mrg": {"id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306", "name": "Mr-G", "role": "Creative & Experience"},
+    "edwin": {"id": "agent-local-b867273f-b849-40de-b616-e5cf9b45239b", "name": "Edwin", "role": "Money & Commitments", "letta": "0.32.15", "created": "2026-09-25"}
   }
 }
