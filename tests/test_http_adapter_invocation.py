@@ -113,6 +113,7 @@ class HttpAdapterInvocationTest(unittest.TestCase):
             env = os.environ.copy()
             env.update({
                 "MYHYV_BRIDGE_PORT": "0",
+                "MYHYV_BRIDGE_WEBHOOK_TOKEN": "test-only-bridge-token",
                 "MYHYV_BRIDGE_LEDGER": str(ledger),
                 "MYHYV_PAPERCLIP_COMPANY_ID": "company-myhyv",
                 "PAPERCLIP_API_URL": f"http://127.0.0.1:{api_port}",
@@ -147,6 +148,7 @@ class HttpAdapterInvocationTest(unittest.TestCase):
                     "BRIDGE_URL": f"http://127.0.0.1:{port}/wake/arthur",
                     "AGENT_ID": "pc-arthur",
                     "RUN_ID": "run-1",
+                    "BRIDGE_TOKEN": "test-only-bridge-token",
                     "WAKE_CONTEXT": json.dumps({
                         "issueId": "task-arthur",
                         "taskId": "task-arthur",
@@ -154,6 +156,26 @@ class HttpAdapterInvocationTest(unittest.TestCase):
                         "otherVisibleIssueId": "task-other",
                     }),
                 }
+                missing_auth = subprocess.run(
+                    ["node", str(INVOKE)],
+                    env={**env, **base, "BRIDGE_TOKEN": ""},
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertNotEqual(missing_auth.returncode, 0)
+                self.assertEqual(json.loads(missing_auth.stdout)["status"], 401)
+                bad_auth = subprocess.run(
+                    ["node", str(INVOKE)],
+                    env={**env, **base, "BRIDGE_TOKEN": "wrong-token"},
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertNotEqual(bad_auth.returncode, 0)
+                self.assertEqual(json.loads(bad_auth.stdout)["status"], 401)
+                self.assertEqual(FakePaperclip.fetched, [])
+
                 good = subprocess.run(
                     ["node", str(INVOKE)],
                     env={**env, **base},
