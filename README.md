@@ -16,13 +16,16 @@ This is **not** a website change. The LifeOS frontend was inspected read-only an
 
 Letta the product is free locally. Model tokens are not.
 
-## Agents (exactly three)
+## Agents
 
 | Name | Role | Local id |
 |---|---|---|
 | Sabi | Coordinator. Michael's only interface | `agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81` |
 | Arthur | Technology & Systems | `agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e` |
 | Mr G | Creative & Experience | `agent-local-bc3abe43-c523-41d1-b433-261ea1697306` |
+| Edwin | Money & Commitments. Never moves money | `agent-local-b867273f-b849-40de-b616-e5cf9b45239b` |
+
+Sabi, Arthur, and Mr G are the 2026-09-22 proof trio. Edwin was created 2026-09-25 on a **new** local backend (same Letta Code 0.32.15, same model). His id will not resolve in the September SQLite. Persona: `agents/edwin/persona.md`. Identity reply: `evidence/01-identity-edwin.md`.
 
 IDs live in `config/agents.json`. Recreate with `letta --backend local agents create` if you clone cold.
 
