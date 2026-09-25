@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import re
@@ -27,9 +28,10 @@ def inspect_host(store: Path, roster_file: Path) -> dict:
     for slug, worker in roster["workers"].items():
         agent_id = worker.get("letta_id")
         safe_id = quote(agent_id, safe="") if isinstance(agent_id, str) and agent_id else None
+        record_ids = [safe_id, base64.urlsafe_b64encode(agent_id.encode()).decode().rstrip("=")] if safe_id else []
         workers[slug] = {
             "letta_id": agent_id,
-            "agent_record_present": bool(safe_id and (store / "agents" / (safe_id + ".json")).is_file()),
+            "agent_record_present": any((store / "agents" / (name + ".json")).is_file() for name in record_ids),
             "memory_namespace_present": bool(safe_id and (store / "memfs" / safe_id / "memory").is_dir()),
             "runtime_identity_verified": False,
         }
