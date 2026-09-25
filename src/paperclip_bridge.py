@@ -328,12 +328,18 @@ def _execute_locked(
 
 def default_fetch_issue(ctx: dict[str, str]) -> dict[str, Any]:
     import urllib.request
+    import urllib.error
     from urllib.parse import quote
 
     url = ctx["PAPERCLIP_API_URL"].rstrip("/") + "/api/issues/" + quote(ctx["PAPERCLIP_TASK_ID"], safe="")
     req = urllib.request.Request(url, headers={"Authorization": "Bearer " + ctx["PAPERCLIP_API_KEY"]})
-    with urllib.request.urlopen(req, timeout=20) as response:
-        payload = json.loads(response.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=20) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        if exc.code in {401, 403, 404}:
+            raise BridgeError("blocked", "Paperclip task is unavailable to this worker", 2) from None
+        raise BridgeError("blocked", "Paperclip task lookup failed; no Letta call was made", 3) from None
     if not isinstance(payload, dict):
         raise BridgeError("blocked", "Paperclip issue payload was not an object", 3)
     return payload
