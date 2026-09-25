@@ -423,11 +423,24 @@ def env_from_http_wake(body: Any, roster: dict[str, Any], slug_hint: str | None,
         raise BridgeError("blocked", "Paperclip HTTP body has no runId", 2)
     company_id = environ.get("MYHYV_PAPERCLIP_COMPANY_ID", "").strip()
     api_url = environ.get("PAPERCLIP_API_URL", "").strip()
-    api_key = environ.get("PAPERCLIP_API_KEY", "").strip()
-    if not company_id or not api_url or not api_key:
+    if not company_id or not api_url:
         raise BridgeError("blocked", "Bridge is missing its pinned Paperclip company or API settings", 2)
     # A company id inside the POST cannot choose the company.
     slug, _worker = worker_for_paperclip_agent(roster, agent_id.strip(), slug_hint)
+    key_file = environ.get("MYHYV_PAPERCLIP_WORKER_KEYS_FILE", "").strip()
+    if key_file:
+        try:
+            keys = json.loads(Path(key_file).read_text())
+            api_key = keys.get(agent_id.strip()) if isinstance(keys, dict) else None
+        except (OSError, ValueError):
+            raise BridgeError("blocked", "Worker API credential file is unavailable", 2) from None
+        if not isinstance(api_key, str) or not api_key.strip():
+            raise BridgeError("blocked", "No API credential is configured for this worker", 2)
+        api_key = api_key.strip()
+    else:
+        api_key = environ.get("PAPERCLIP_API_KEY", "").strip()
+    if not api_key:
+        raise BridgeError("blocked", "Bridge is missing its Paperclip API credential", 2)
     return {
         "PAPERCLIP_AGENT_ID": agent_id.strip(),
         "PAPERCLIP_COMPANY_ID": company_id,
