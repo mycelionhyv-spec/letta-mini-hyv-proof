@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed Paperclip process adapter bridge to one pinned Letta agent.
+"""Fail-closed Paperclip HTTP bridge to one pinned Letta agent.
 
 This file does not start Paperclip and does not mark a run complete unless the
 Letta call returns a definite assistant result. Missing, mismatched, duplicate,
@@ -13,12 +13,15 @@ import hmac
 import json
 import os
 import sys
+import tempfile
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 ROSTER_PATH = ROOT / "config" / "paperclip-roster.json"
 TERMINAL_STATUSES = {"done", "completed", "cancelled", "canceled", "closed"}
+MAX_WAKE_BYTES = 65536
 ALLOWED_TYPES = {
     "arthur": {"synthetic-smoke"},
     "mrg": {"synthetic-smoke"},
@@ -40,17 +43,18 @@ def sha256_text(value: str) -> str:
 
 
 def load_roster(path: Path | None = None) -> dict[str, Any]:
-    raw = json.loads((path or ROSTER_PATH).read_text())
+    configured = os.environ.get("MYHYV_BRIDGE_ROSTER")
+    raw = json.loads((path or (Path(configured) if configured else ROSTER_PATH)).read_text())
     if "workers" not in raw or "excluded" not in raw:
         raise BridgeError("blocked", "Roster is missing workers or excluded", 2)
     return raw
 
 
-def ledger_path() -> Path:
-    configured = os.environ.get("MYHYV_BRIDGE_LEDGER")
+def ledger_path(environ: dict[str, str] | None = None) -> Path:
+    configured = (os.environ if environ is None else environ).get("MYHYV_BRIDGE_LEDGER")
     if configured:
         return Path(configured)
-    return Path.home() / ".letta" / "paperclip-bridge-ledger.json"
+    return Path.home() / ".local" / "state" / "myhyv" / "bridge" / "ledger.json"
 
 
 def read_ledger(path: Path) -> dict[str, Any]:
@@ -63,10 +67,41 @@ def read_ledger(path: Path) -> dict[str, Any]:
 
 
 def write_ledger(path: Path, data: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(".json.tmp")
-    tmp.write_text(json.dumps(data, indent=2) + "\n")
-    tmp.replace(path)
+    """Persist private JSON before returning; never expose a partial file."""
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    fd, name = tempfile.mkstemp(prefix=".bridge-", suffix=".tmp", dir=path.parent)
+    tmp = Path(name)
+    try:
+        with os.fdopen(fd, "w") as stream:
+            json.dump(data, stream, indent=2)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        tmp.replace(path)
+        directory = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+@contextmanager
+def invocation_lock(path: Path):
+    """One invocation at a time across threads and processes on a POSIX host."""
+    import fcntl
+
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    fd = os.open(str(path) + ".lock", os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+    try:
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise BridgeError("blocked", "Another bridge invocation is active", 8) from exc
+        yield
+    finally:
+        os.close(fd)
 
 
 def task_type_of(issue: dict[str, Any]) -> str | None:
@@ -117,6 +152,8 @@ def validate_issue(issue: dict[str, Any] | None, ctx: dict[str, str], slug: str)
     status = str(issue.get("status") or "").lower()
     if status in TERMINAL_STATUSES:
         raise BridgeError("blocked", f"Task is already {status}", 4)
+    if status not in {"todo", "in_progress"}:
+        raise BridgeError("blocked", "Task is not in a runnable trial state", 2)
     kind = task_type_of(issue)
     allowed = ALLOWED_TYPES.get(slug)
     if allowed is None or kind not in allowed:
@@ -136,6 +173,11 @@ def resolve_worker(roster: dict[str, Any], slug: str) -> dict[str, Any]:
             f"{slug} has no verified Letta agent on this host",
             7,
         )
+    agent_id = worker["letta_id"]
+    if any(item.get("id") == agent_id for item in roster.get("excluded", {}).values() if isinstance(item, dict)):
+        raise BridgeError("blocked", "Worker maps to an excluded Letta identity", 2)
+    if sum(item.get("letta_id") == agent_id for item in roster["workers"].values() if isinstance(item, dict)) != 1:
+        raise BridgeError("blocked", "Letta identity is shared by more than one worker", 2)
     return worker
 
 
@@ -171,9 +213,25 @@ def execute(
     invoke_letta: Callable[[str, str], dict[str, Any]],
     ledger_file: Path,
 ) -> dict[str, Any]:
+    with invocation_lock(ledger_file):
+        return _execute_locked(
+            env, roster=roster, fetch_issue=fetch_issue,
+            invoke_letta=invoke_letta, ledger_file=ledger_file,
+        )
+
+
+def _execute_locked(
+    env: dict[str, str],
+    *,
+    roster: dict[str, Any],
+    fetch_issue: Callable[[dict[str, str]], dict[str, Any] | None],
+    invoke_letta: Callable[[str, str], dict[str, Any]],
+    ledger_file: Path,
+) -> dict[str, Any]:
     ctx = require_env(env)
     slug = ctx["PAPERCLIP_WORKER_SLUG"]
     worker = resolve_worker(roster, slug)
+    worker_for_paperclip_agent(roster, ctx["PAPERCLIP_AGENT_ID"], slug)
     issue = fetch_issue(ctx)
     kind = validate_issue(issue, ctx, slug)
     assert issue is not None
@@ -188,6 +246,7 @@ def execute(
     input_hash = sha256_text(prompt)
     # Reserve the attempt before the model call so a crash cannot be retried blindly.
     attempt = {
+        "company_id": ctx["PAPERCLIP_COMPANY_ID"],
         "task_id": ctx["PAPERCLIP_TASK_ID"],
         "run_id": ctx["PAPERCLIP_RUN_ID"],
         "worker": slug,
@@ -206,18 +265,20 @@ def execute(
         raw = invoke_letta(str(worker["letta_id"]), prompt)
     except TimeoutError as exc:
         attempt["status"] = "timeout"
-        attempt["error"] = str(exc)
+        attempt["error"] = "Letta call timed out; do not retry automatically"
         write_ledger(ledger_file, ledger)
-        raise BridgeError("timeout", str(exc), 6) from exc
+        raise BridgeError("timeout", attempt["error"], 6) from exc
     except Exception as exc:
         attempt["status"] = "provider_error"
-        attempt["error"] = f"{type(exc).__name__}: {exc}"
+        attempt["error"] = "Letta invocation failed; outcome must be reviewed"
         write_ledger(ledger_file, ledger)
         raise BridgeError("provider_error", attempt["error"], 6) from exc
 
+    if not isinstance(raw, dict):
+        raw = {"uncertain": True}
     if raw.get("uncertain") or raw.get("returncode") not in (0, None):
         attempt["status"] = "uncertain"
-        attempt["error"] = str(raw.get("error") or "Letta result was not a definite success")
+        attempt["error"] = "Letta result was not a definite success"
         attempt["usage"] = raw.get("usage")
         write_ledger(ledger_file, ledger)
         raise BridgeError("uncertain", attempt["error"], 6)
@@ -233,6 +294,7 @@ def execute(
     usage = raw.get("usage") if isinstance(raw.get("usage"), dict) else None
     result = {
         "status": "succeeded",
+        "company_id": ctx["PAPERCLIP_COMPANY_ID"],
         "task_id": ctx["PAPERCLIP_TASK_ID"],
         "run_id": ctx["PAPERCLIP_RUN_ID"],
         "worker": slug,
@@ -248,10 +310,17 @@ def execute(
         "provider_monetary_cost": "unknown",
         "paperclip_issue_marked_complete": False,
     }
+    receipt_id = sha256_text(json.dumps([
+        ctx["PAPERCLIP_COMPANY_ID"], ctx["PAPERCLIP_TASK_ID"], ctx["PAPERCLIP_RUN_ID"],
+    ]))
+    receipt = ledger_file.parent / "receipts" / (receipt_id + ".json")
+    result["receipt_path"] = str(receipt)
+    write_ledger(receipt, result)
     attempt.update({
         "status": "succeeded",
         "output_sha256": result["output_sha256"],
         "usage": usage,
+        "receipt_path": str(receipt),
     })
     write_ledger(ledger_file, ledger)
     return result
@@ -259,8 +328,9 @@ def execute(
 
 def default_fetch_issue(ctx: dict[str, str]) -> dict[str, Any]:
     import urllib.request
+    from urllib.parse import quote
 
-    url = ctx["PAPERCLIP_API_URL"].rstrip("/") + "/api/issues/" + ctx["PAPERCLIP_TASK_ID"]
+    url = ctx["PAPERCLIP_API_URL"].rstrip("/") + "/api/issues/" + quote(ctx["PAPERCLIP_TASK_ID"], safe="")
     req = urllib.request.Request(url, headers={"Authorization": "Bearer " + ctx["PAPERCLIP_API_KEY"]})
     with urllib.request.urlopen(req, timeout=20) as response:
         payload = json.loads(response.read().decode("utf-8"))
@@ -276,10 +346,15 @@ def default_invoke_letta(agent_id: str, prompt: str) -> dict[str, Any]:
     cmd = [
         binary, "--backend", "local", "--agent", agent_id, "--new", "-p", prompt,
         "--output-format", "json", "--reflection-trigger", "off",
-        "--no-bundled-skills", "--no-mods", "--no-system-info-reminder",
+        "--no-skills", "--no-mods", "--no-system-info-reminder",
+        "--tools", "", "--permission-mode", "strict",
     ]
+    # The provider/store settings remain available; bridge authority does not.
+    child_env = {key: value for key, value in os.environ.items()
+                 if not key.startswith(("PAPERCLIP_", "MYHYV_")) and key != "BRIDGE_TOKEN"}
+    child_env.update({"CI": "1", "NO_COLOR": "1"})
     try:
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=180, env={**os.environ, "CI": "1", "NO_COLOR": "1"})
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=180, env=child_env)
     except subprocess.TimeoutExpired as exc:
         raise TimeoutError("Letta call timed out") from exc
     parsed: Any = None
@@ -301,7 +376,7 @@ def default_invoke_letta(agent_id: str, prompt: str) -> dict[str, Any]:
         "usage": usage,
         "returncode": proc.returncode,
         "uncertain": uncertain,
-        "error": (proc.stderr or "")[-500:],
+        "error": "Letta runtime did not return a definite success" if uncertain else None,
     }
 
 
@@ -368,6 +443,10 @@ def make_handler(roster: dict[str, Any], environ: dict[str, str], fetch_issue, i
     from http.server import BaseHTTPRequestHandler
 
     class Handler(BaseHTTPRequestHandler):
+        def setup(self) -> None:
+            super().setup()
+            self.connection.settimeout(10)
+
         def log_message(self, fmt: str, *args: Any) -> None:
             return
 
@@ -383,15 +462,27 @@ def make_handler(roster: dict[str, Any], environ: dict[str, str], fetch_issue, i
                 self._send(503, {"status": "blocked", "error": "Bridge authentication is not configured"})
                 return
             try:
-                authorized = bool(provided) and hmac.compare_digest(provided, expected)
+                authorized = (len(self.headers.get_all("X-MyHYv-Bridge-Token", [])) == 1
+                              and bool(provided) and hmac.compare_digest(provided, expected))
             except TypeError:
                 authorized = False
             if not authorized:
                 self._send(401, {"status": "blocked", "error": "Unauthorized"})
                 return
-            length = int(self.headers.get("content-length", "0") or "0")
-            raw = self.rfile.read(length) if length else b""
             try:
+                if self.headers.get("transfer-encoding") or len(self.headers.get_all("content-length", [])) != 1:
+                    self._send(400, {"status": "blocked", "error": "A single Content-Length is required"})
+                    return
+                try:
+                    length = int(self.headers["content-length"])
+                except ValueError:
+                    length = -1
+                if length <= 0 or length > MAX_WAKE_BYTES:
+                    self._send(413 if length > MAX_WAKE_BYTES else 400, {"status": "blocked", "error": "Invalid body length"})
+                    return
+                raw = self.rfile.read(length)
+                if len(raw) != length:
+                    raise ValueError("Incomplete body")
                 body = json.loads(raw.decode("utf-8"))
                 env = env_from_http_wake(body, roster, slug_hint, environ)
                 result = execute(
@@ -401,6 +492,12 @@ def make_handler(roster: dict[str, Any], environ: dict[str, str], fetch_issue, i
                     invoke_letta=invoke_letta,
                     ledger_file=ledger_file,
                 )
+            except (ValueError, UnicodeError):
+                self._send(400, {"status": "blocked", "error": "Invalid JSON wake body"})
+                return
+            except TimeoutError:
+                self._send(408, {"status": "blocked", "error": "Wake body timed out"})
+                return
             except BridgeError as exc:
                 self._send(422, {
                     "status": exc.status,
@@ -437,13 +534,13 @@ def serve(environ: dict[str, str] | None = None) -> None:
     port = int(environ.get("MYHYV_BRIDGE_PORT", "8765"))
     if not environ.get("MYHYV_BRIDGE_WEBHOOK_TOKEN", "").strip():
         raise RuntimeError("MYHYV_BRIDGE_WEBHOOK_TOKEN is required; refusing to start unauthenticated")
-    roster = load_roster()
+    roster = load_roster(Path(environ["MYHYV_BRIDGE_ROSTER"]) if environ.get("MYHYV_BRIDGE_ROSTER") else None)
     server = ThreadingHTTPServer((host, port), make_handler(
         roster,
         environ,
         default_fetch_issue,
         default_invoke_letta,
-        ledger_path(),
+        ledger_path(environ),
     ))
     print(f"listening {host} {server.server_address[1]}", file=sys.stderr, flush=True)
     server.serve_forever()

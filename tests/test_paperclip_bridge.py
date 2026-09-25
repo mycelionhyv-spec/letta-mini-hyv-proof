@@ -16,9 +16,9 @@ import paperclip_bridge as bridge  # noqa: E402
 def roster() -> dict:
     return {
         "workers": {
-            "arthur": {"letta_id": "agent-arthur", "resolved": True, "role": "Technology & Systems"},
-            "cyber": {"letta_id": "agent-cyber", "resolved": True, "role": "Cyber Security"},
-            "edwin": {"letta_id": "agent-edwin-research", "resolved": True},
+            "arthur": {"letta_id": "agent-arthur", "paperclip_agent_id": "pc-arthur", "resolved": True, "role": "Technology & Systems"},
+            "cyber": {"letta_id": "agent-cyber", "paperclip_agent_id": "pc-cyber", "resolved": True, "role": "Cyber Security"},
+            "edwin": {"letta_id": "agent-edwin-research", "paperclip_agent_id": "pc-edwin", "resolved": True},
         },
         "excluded": {"sabi": {"id": "agent-sabi"}, "edwin_money": {"id": "agent-edwin-money"}},
     }

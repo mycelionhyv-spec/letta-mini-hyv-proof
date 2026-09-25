@@ -1,4 +1,4 @@
-"""Invoke the bridge the way Paperclip's HTTP adapter actually does."""
+"""Offline HTTP transport test. Neither a live Paperclip nor a live Letta run."""
 
 from __future__ import annotations
 
@@ -114,6 +114,7 @@ class HttpAdapterInvocationTest(unittest.TestCase):
             env.update({
                 "MYHYV_BRIDGE_PORT": "0",
                 "MYHYV_BRIDGE_WEBHOOK_TOKEN": "test-only-bridge-token",
+                "MYHYV_BRIDGE_ROSTER": str(roster_path),
                 "MYHYV_BRIDGE_LEDGER": str(ledger),
                 "MYHYV_PAPERCLIP_COMPANY_ID": "company-myhyv",
                 "PAPERCLIP_API_URL": f"http://127.0.0.1:{api_port}",
@@ -123,16 +124,7 @@ class HttpAdapterInvocationTest(unittest.TestCase):
                 "CI": "1",
                 "NO_COLOR": "1",
             })
-            # The server loads the roster from the repo path. Point it at the temp roster
-            # by swapping is not supported, so write over is unsafe. Use a copy of the
-            # module path via PYTHONPATH and a wrapper. Instead, run serve from a copied tree.
-            bridge_src = (ROOT / "src" / "paperclip_bridge.py").read_text()
-            bridge_src = bridge_src.replace(
-                'ROSTER_PATH = ROOT / "config" / "paperclip-roster.json"',
-                f'ROSTER_PATH = Path(r"{roster_path}")',
-            )
-            bridge_path = tmp_path / "paperclip_bridge.py"
-            bridge_path.write_text(bridge_src)
+            bridge_path = ROOT / "src" / "paperclip_bridge.py"
             proc = subprocess.Popen(
                 [sys.executable, str(bridge_path), "--serve"],
                 env=env,
@@ -222,7 +214,10 @@ class HttpAdapterInvocationTest(unittest.TestCase):
             finally:
                 proc.terminate()
                 proc.wait(timeout=5)
+                proc.stdout.close()
+                proc.stderr.close()
                 api.shutdown()
+                api.server_close()
 
 
 if __name__ == "__main__":

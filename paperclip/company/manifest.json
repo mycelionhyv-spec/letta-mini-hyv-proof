@@ -47,7 +47,7 @@
       "adapterConfig": {
         "url": "http://127.0.0.1:8765/wake/arthur",
         "method": "POST",
-        "timeoutMs": 180000
+        "timeoutMs": 240000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -86,7 +86,7 @@
       "adapterConfig": {
         "url": "http://127.0.0.1:8765/wake/mrg",
         "method": "POST",
-        "timeoutMs": 180000
+        "timeoutMs": 240000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -125,7 +125,7 @@
       "adapterConfig": {
         "url": "http://127.0.0.1:8765/wake/edwin",
         "method": "POST",
-        "timeoutMs": 180000
+        "timeoutMs": 240000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -164,7 +164,7 @@
       "adapterConfig": {
         "url": "http://127.0.0.1:8765/wake/agnes",
         "method": "POST",
-        "timeoutMs": 180000
+        "timeoutMs": 240000
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -203,7 +203,7 @@
       "adapterConfig": {
         "url": "http://127.0.0.1:8765/wake/cyber",
         "method": "POST",
-        "timeoutMs": 180000
+        "timeoutMs": 240000
       },
       "runtimeConfig": {
         "heartbeat": {

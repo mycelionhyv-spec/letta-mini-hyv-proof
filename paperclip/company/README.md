@@ -15,3 +15,5 @@ Sabi is not in this package. The money-Edwin id is not in this package. Cyber ha
 The bridge now refuses to start unless `MYHYV_BRIDGE_WEBHOOK_TOKEN` is set. It authenticates the `X-MyHYv-Bridge-Token` header before reading or parsing a wake body. Missing or invalid headers return 401 without querying Paperclip or invoking Letta.
 
 The company export deliberately contains no token. Before enabling an HTTP adapter, create a high-entropy per-host token, provide it to the bridge through the host's protected environment, and add the matching header to each Paperclip agent's local adapter configuration. Paperclip's HTTP adapter accepts literal `headers`, but the reviewed adapter does not resolve secret references inside header values. Do not put the token in this repository or exported company package. Keep the token-bearing Paperclip config and host environment access restricted; rotate the token if either is exposed.
+
+See [the pinned host deployment procedure](../../docs/paperclip-host-deployment.md) for the required private endpoint allowlist, authenticated owner access, durable receipts and real trial gates.
