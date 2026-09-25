@@ -1,0 +1,19 @@
+# Linux user-service template. Substitute ALL absolute paths before installation.
+# Run as the owner of the confirmed Letta store; no root service is required.
+[Unit]
+Description=MyHYv private Paperclip to Letta bridge
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/ABSOLUTE/PATH/TO/letta-mini-hyv-proof
+EnvironmentFile=/ABSOLUTE/PRIVATE/PATH/bridge.env
+ExecStart=/ABSOLUTE/PATH/TO/python3 /ABSOLUTE/PATH/TO/letta-mini-hyv-proof/src/paperclip_bridge.py --serve
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

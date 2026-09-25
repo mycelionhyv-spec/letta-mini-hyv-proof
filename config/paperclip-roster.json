@@ -1,0 +1,68 @@
+{
+  "purpose": "Pinned Letta IDs for the Paperclip process bridge. resolved=false means this host did not have the agent record or MemFS namespace.",
+  "inspected_at": "2026-09-24T20:30:00Z",
+  "store": "local Letta Code backend on the machine that ran the inspection",
+  "paperclip_company_imported": false,
+  "workers": {
+    "arthur": {
+      "name": "Arthur",
+      "role": "Technology & Systems",
+      "paperclip_role": "engineer",
+      "letta_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "resolved": false,
+      "letta_cli": "Agent not found",
+      "paperclip_agent_id": null
+    },
+    "mrg": {
+      "name": "Mr G",
+      "role": "Creative & Experience",
+      "paperclip_role": "designer",
+      "letta_id": "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+      "resolved": false,
+      "letta_cli": "Agent not found",
+      "paperclip_agent_id": null
+    },
+    "edwin": {
+      "name": "Edwin",
+      "role": "Research & Analysis",
+      "paperclip_role": "researcher",
+      "letta_id": "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+      "resolved": false,
+      "letta_cli": "Agent not found",
+      "do_not_substitute": "agent-local-b867273f-b849-40de-b616-e5cf9b45239b",
+      "paperclip_agent_id": null
+    },
+    "agnes": {
+      "name": "Agnes",
+      "role": "Finance & Business Operations",
+      "paperclip_role": "cfo",
+      "letta_id": "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104",
+      "resolved": false,
+      "letta_cli": "Agent not found",
+      "paperclip_agent_id": null
+    },
+    "cyber": {
+      "name": "Cyber",
+      "role": "Cyber Security",
+      "paperclip_role": "security",
+      "letta_id": null,
+      "resolved": false,
+      "letta_cli": "not created on this store",
+      "reason": "Creating Cyber here would put it on the money-Edwin backend, not with Arthur, Mr G, Edwin Research or Agnes.",
+      "paperclip_agent_id": null
+    }
+  },
+  "excluded": {
+    "sabi": {
+      "id": "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+      "reason": "Michael's coordinator. Not a Paperclip worker. Not present on this host either."
+    },
+    "edwin_money": {
+      "id": "agent-local-b867273f-b849-40de-b616-e5cf9b45239b",
+      "name": "Edwin",
+      "role": "Money & Commitments",
+      "reason": "Preserved. Different person from canonical Edwin Research. Not registered in Paperclip."
+    }
+  },
+  "task_delivery": "Paperclip http adapter POST body context. The process adapter does not supply a task id, so it is not the company adapter."
+}

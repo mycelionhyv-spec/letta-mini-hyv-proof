@@ -1,0 +1,20 @@
+{
+  "status": "INSPECTED_SINGLE_NAMESPACE_ONLY",
+  "isolation_of_five_canonical_agents": "BLOCKED",
+  "note": "Read-only directory listing. No model call. Provider auth file was not read.",
+  "namespaces": [
+    {
+      "id": "agent-local-b867273f-b849-40de-b616-e5cf9b45239b",
+      "directory_present": true,
+      "persona_role": "Money & Commitments",
+      "canonical_research_edwin": false
+    }
+  ],
+  "missing_namespace_ids": [
+    "agent-local-df17783d-ebc0-4fb7-8d8e-7b11f603fb81",
+    "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "agent-local-bc3abe43-c523-41d1-b433-261ea1697306",
+    "agent-local-738aaad8-bf19-4151-bd2c-999770104147",
+    "agent-local-29dd7050-8717-4f99-b0ae-0f6b657fb104"
+  ]
+}

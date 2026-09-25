@@ -1,0 +1,5 @@
+Source: paperclipai/paperclip server/src/adapters/process/execute.ts on master, read 2026-09-25.
+The process adapter sets PAPERCLIP_RUN_ID and PAPERCLIP_API_KEY. It does not read ctx.context.
+
+  env.PAPERCLIP_RUN_ID = runId;
+  if (authToken) env.PAPERCLIP_API_KEY = authToken;

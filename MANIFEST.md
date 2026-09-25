@@ -30,3 +30,9 @@
 | evidence/ | Original three-agent proof (unchanged history) |
 
 Not included: `.venv/`, LifeOS website source, API keys, Letta Cloud, Council V2 files.
+| evidence/paperclip-host-2026-09-25/INSPECTION.md | This host cannot run the five specialists |
+| config/paperclip-roster.json | Pinned ids, all unresolved here; Sabi and money-Edwin excluded |
+| src/paperclip_bridge.py | Fail-closed Paperclip process bridge |
+| paperclip/company/ | Unimported company package |
+| docs/sabi-paperclip-handoff.md | Astra handoff; site was not changed |
+| evidence/paperclip-host-2026-09-25/STORE-SEARCH.md | Original store not found; import not started |
