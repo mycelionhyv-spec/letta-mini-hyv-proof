@@ -133,6 +133,24 @@ class BridgeGuards(unittest.TestCase):
 
 
 class HttpGuards(unittest.TestCase):
+    def test_http_wake_selects_only_pinned_worker_credential(self):
+        with tempfile.TemporaryDirectory() as folder:
+            keys = Path(folder) / "keys.json"
+            keys.write_text(json.dumps({"pc-arthur": "arthur-test-key", "pc-cyber": "cyber-test-key"}))
+            env = {"MYHYV_PAPERCLIP_COMPANY_ID": "company-myhyv", "PAPERCLIP_API_URL": "http://localhost",
+                   "MYHYV_PAPERCLIP_WORKER_KEYS_FILE": str(keys), "PAPERCLIP_API_KEY": "must-not-fallback"}
+            body = {"agentId": "pc-arthur", "runId": "run-1", "context": {"taskId": "task-1"}}
+            result = bridge.env_from_http_wake(body, roster(), "arthur", env)
+            self.assertEqual(result["PAPERCLIP_API_KEY"], "arthur-test-key")
+            with self.assertRaises(bridge.BridgeError):
+                bridge.env_from_http_wake(body, roster(), "cyber", env)
+            keys.write_text(json.dumps({"pc-cyber": "cyber-test-key"}))
+            with self.assertRaises(bridge.BridgeError):
+                bridge.env_from_http_wake(body, roster(), "arthur", env)
+            keys.write_text("invalid JSON")
+            with self.assertRaises(bridge.BridgeError):
+                bridge.env_from_http_wake(body, roster(), "arthur", env)
+
     def test_auth_precedes_body_read_and_lookup(self):
         with tempfile.TemporaryDirectory() as folder:
             fetch, invoke = Mock(), Mock()
