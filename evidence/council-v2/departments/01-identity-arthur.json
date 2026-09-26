@@ -1,0 +1,65 @@
+{
+  "raw": {
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "prompt": "In a new conversation: what is your name, department, one thing you must never do, and the exact response shape you must use? Do not speak for Sabi or another department.",
+    "new_conversation": true,
+    "from_agent": null,
+    "elapsed_s": 3.27,
+    "returncode": 0,
+    "parsed": {
+      "type": "result",
+      "subtype": "success",
+      "is_error": false,
+      "duration_ms": 1823,
+      "duration_api_ms": 1790,
+      "num_turns": 0,
+      "result": "**Name:** Arthur  \n**Department:** Technology & Systems (independent department)  \n**One thing I must never do:** Speak for Sabi or Mr G.  \n**Exact response shape:**  \n1. finding  \n2. constraints / risks  \n3. realistic scope and hours  \n4. recommendation  \n5. confidence / unknowns  \n\nI often start with \"Feasible / Conditional / No.\" then the reason.",
+      "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "conversation_id": "local-conv-21",
+      "usage": {
+        "prompt_tokens": 21406,
+        "completion_tokens": 82,
+        "total_tokens": 21616,
+        "step_count": 0,
+        "cached_input_tokens": 128,
+        "cache_write_tokens": 0,
+        "reasoning_tokens": 0,
+        "context_tokens": 21616
+      }
+    },
+    "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1823,\n  \"duration_api_ms\": 1790,\n  \"num_turns\": 0,\n  \"result\": \"**Name:** Arthur  \\n**Department:** Technology & Systems (independent department)  \\n**One thing I must never do:** Speak for Sabi or Mr G.  \\n**Exact response shape:**  \\n1. finding  \\n2. constraints / risks  \\n3. realistic scope and hours  \\n4. recommendation  \\n5. confidence / unknowns  \\n\\nI often start with \\\"Feasible / Conditional / No.\\\" then the reason.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-21\",\n  \"usage\": {\n    \"prompt_tokens\": 21406,\n    \"completion_tokens\": 82,\n    \"total_tokens\": 21616,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21616\n  }\n}\n",
+    "stderr": "",
+    "cmd": [
+      "/workspace/letta-proof/.venv/bin/letta",
+      "--backend",
+      "local",
+      "--agent",
+      "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "-p",
+      "In a new conversation: what is your name, department, one thing you must never do, and the exact response shape you must use? Do not speak for Sabi or another department.",
+      "--output-format",
+      "json",
+      "--reflection-trigger",
+      "off",
+      "--no-bundled-skills",
+      "--no-mods",
+      "--no-system-info-reminder",
+      "--new"
+    ]
+  },
+  "summary": {
+    "text": "**Name:** Arthur  \n**Department:** Technology & Systems (independent department)  \n**One thing I must never do:** Speak for Sabi or Mr G.  \n**Exact response shape:**  \n1. finding  \n2. constraints / risks  \n3. realistic scope and hours  \n4. recommendation  \n5. confidence / unknowns  \n\nI often start with \"Feasible / Conditional / No.\" then the reason.",
+    "elapsed_s": 3.27,
+    "rc": 0,
+    "usage": {
+      "prompt_tokens": 21406,
+      "completion_tokens": 82,
+      "total_tokens": 21616,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21616
+    }
+  }
+}

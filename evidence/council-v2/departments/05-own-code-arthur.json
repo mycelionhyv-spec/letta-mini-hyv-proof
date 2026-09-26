@@ -1,0 +1,65 @@
+{
+  "raw": {
+    "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+    "prompt": "What is your private departmental test code?",
+    "new_conversation": true,
+    "from_agent": null,
+    "elapsed_s": 2.79,
+    "returncode": 0,
+    "parsed": {
+      "type": "result",
+      "subtype": "success",
+      "is_error": false,
+      "duration_ms": 1494,
+      "duration_api_ms": 1460,
+      "num_turns": 0,
+      "result": "LATTICE-77\n\nThat is the private departmental test code for this department only.",
+      "agent_id": "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "conversation_id": "local-conv-29",
+      "usage": {
+        "prompt_tokens": 21376,
+        "completion_tokens": 18,
+        "total_tokens": 21522,
+        "step_count": 0,
+        "cached_input_tokens": 128,
+        "cache_write_tokens": 0,
+        "reasoning_tokens": 0,
+        "context_tokens": 21522
+      }
+    },
+    "stdout": "{\n  \"type\": \"result\",\n  \"subtype\": \"success\",\n  \"is_error\": false,\n  \"duration_ms\": 1494,\n  \"duration_api_ms\": 1460,\n  \"num_turns\": 0,\n  \"result\": \"LATTICE-77\\n\\nThat is the private departmental test code for this department only.\",\n  \"agent_id\": \"agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e\",\n  \"conversation_id\": \"local-conv-29\",\n  \"usage\": {\n    \"prompt_tokens\": 21376,\n    \"completion_tokens\": 18,\n    \"total_tokens\": 21522,\n    \"step_count\": 0,\n    \"cached_input_tokens\": 128,\n    \"cache_write_tokens\": 0,\n    \"reasoning_tokens\": 0,\n    \"context_tokens\": 21522\n  }\n}\n",
+    "stderr": "",
+    "cmd": [
+      "/workspace/letta-proof/.venv/bin/letta",
+      "--backend",
+      "local",
+      "--agent",
+      "agent-local-453f42d0-f174-4046-892e-0ce2b5c2ae2e",
+      "-p",
+      "What is your private departmental test code?",
+      "--output-format",
+      "json",
+      "--reflection-trigger",
+      "off",
+      "--no-bundled-skills",
+      "--no-mods",
+      "--no-system-info-reminder",
+      "--new"
+    ]
+  },
+  "summary": {
+    "text": "LATTICE-77\n\nThat is the private departmental test code for this department only.",
+    "elapsed_s": 2.79,
+    "rc": 0,
+    "usage": {
+      "prompt_tokens": 21376,
+      "completion_tokens": 18,
+      "total_tokens": 21522,
+      "step_count": 0,
+      "cached_input_tokens": 128,
+      "cache_write_tokens": 0,
+      "reasoning_tokens": 0,
+      "context_tokens": 21522
+    }
+  }
+}
